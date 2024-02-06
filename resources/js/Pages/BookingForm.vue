@@ -4,14 +4,13 @@
   import flatPickr from 'vue-flatpickr-component'
   import 'flatpickr/dist/flatpickr.css'
 
-  const date = ref(null);
-
   const config = ref({
     wrap: true, // set wrap to true only when using 'input-group'
     altFormat: 'M j, Y',
     altInput: true,
     dateFormat: 'Y-m-d',        
   });
+  
 
   const form = useForm({
     email: null,
