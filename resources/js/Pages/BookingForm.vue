@@ -1,12 +1,25 @@
 <script setup>
-  import { router, useForm } from '@inertiajs/vue3'
+  import { ref } from 'vue'
+  import { useForm } from '@inertiajs/vue3'
+  import flatPickr from 'vue-flatpickr-component'
+  import 'flatpickr/dist/flatpickr.css'
+
+  const date = ref(null);
+
+  const config = ref({
+    wrap: true, // set wrap to true only when using 'input-group'
+    altFormat: 'M j, Y',
+    altInput: true,
+    dateFormat: 'Y-m-d',        
+  });
 
   const form = useForm({
     email: null,
     firstname: null,
     middlename: null,
     lastname: null,
-    datetime: null,
+    date: null,
+    time: '',
     note: ''
   })
 
@@ -22,26 +35,23 @@
 
 <template>
   <section class="bg-gray-100" style="background: url('/images/backgrounds/booking-form.jpg'); background-repeat: no-repeat; background-size: cover;">
-    <div class="max-w-screen-xl mx-auto">
-      <div class="flex">
+    <div class="max-w-screen-xl mx-auto h-screen">
+      <div class="flex flex-col md:flex-row">
         <div class="basis-1/2 flex justify-center items-center">
-          <div>
-            <h1 class="font-bold text-4xl">The Name of the Hospital Here</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam delectus expedita alias sit saepe quos voluptas, 
-            </p>
+          <div class="py-5">
+            <h1 class="font-bold text-4xl text-white text-center">Rosario Maclang Bautista General Hospital</h1>
           </div>
         </div>
         <div class="basis-1/2 flex justify-center items-center h-screen">
-          <form @submit.prevent="submit">
 
-            <div class="card w-[80%] bg-base-100 shadow-xl">
-              <div class="card-body">
+          <div class="card w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+              <form @submit.prevent="submit">
                 <label class="form-control w-full">
                   <div class="label">
                     <span class="label-text">What is your name?</span>
                   </div>
-                  <div class="flex gap-2">
+                  <div class="flex flex-col lg:flex-row gap-2">
 
                     <input 
                       v-model="form.firstname"
@@ -84,25 +94,47 @@
                     :class="{'input-error text-error': form.errors.email}"
                   />
                   <div class="text-error" v-if="form.errors.email">{{ form.errors.email }}</div>
-
                 </label>
 
-                <label class="form-control w-full">
-                  <div class="label">
-                    <span class="label-text">Date and time of visit:</span>
-                  </div>
+                <div class="flex gap-2">
+                  <label class="form-control w-full">
+                    <div class="label">
+                      <span class="label-text " :class="{'text-error': form.errors.date}">Date & Time:</span>
+                    </div>
 
-                  <input
-                    v-model="form.datetime"
-                    type="datetime-local"
-                    class="input input-bordered w-full cursor-pointer"
-                    :class="{'input-error text-error': form.errors.datetime}"
-                    onclick="datetimepicker.showModal()"
-                    readonly
-                  />
-                  <div class="text-error" v-if="form.errors.datetime">{{ form.errors.datetime }}</div>
+                    <flat-pickr 
+                      placeholder="Select date of visit"
+                      class="input input-bordered w-full cursor-pointer"
+                      :class="{'input-error text-error': form.errors.date}"
+                      v-model="form.date"
+                      :config="config"
+                    />
+                    <div class="text-error" v-if="form.errors.date">{{ form.errors.date }}</div>
+                  </label>
 
-                </label>
+                  <label class="form-control w-full">
+                    <div class="label">
+                      <span class="label-text" :class="{'text-error': form.errors.time}">Select Time slot:</span>
+                    </div>
+                    <select 
+                      v-model="form.time"
+                      class="select select-bordered w-full"
+                      :class="{'input-error text-error': form.errors.time}"
+                    >
+                      <option disabled selected>Select time of visit</option>
+                      <option value="10">10:00 AM</option>
+                      <option value="11">11:00 AM</option>
+                      <option value="13">01:00 PM</option>
+                      <option value="14">02:00 PM</option>
+                      <option value="15">03:00 PM</option>
+                      <option value="16">04:00 PM</option>
+                      <option value="17">05:00 PM</option>
+                      <option value="18">06:00 PM</option>
+                    </select>
+                    <div class="text-error" v-if="form.errors.time">{{ form.errors.time }}</div>
+                  </label>
+                </div>
+
                 <label class="form-control">
                   <div class="label">
                     <span class="label-text">Note to hospital:</span>
@@ -115,24 +147,11 @@
                   ></textarea>
 
                 </label>
-                <button class="btn btn-primary mt-2">Make a Booking</button>
-              </div>
-            </div>
-          
-          </form>
 
-          <dialog id="datetimepicker" class="modal">
-            <div class="modal-box">
-              <h3 class="font-bold text-lg">Hello!</h3>
-              <p class="py-4">Press ESC key or click the button below to close</p>
-              <div class="modal-action">
-                <form method="dialog">
-                  <!-- if there is a button in form, it will close the modal -->
-                  <button class="btn">Close</button>
-                </form>
-              </div>
+                <button class="btn btn-primary mt-2">Make a Booking</button>
+              </form>
             </div>
-          </dialog>
+          </div>
         </div>
       </div>
     </div>
