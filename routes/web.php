@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingDashboardController;
 use App\Http\Controllers\BookingFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [BookingFormController::class, 'index']);
+
+Route::group(['prefix' => 'console'], function () {
+    Route::get('dashboard', [BookingDashboardController::class, 'index']);
+});

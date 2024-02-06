@@ -1,15 +1,21 @@
 <script setup>
+  import { ref } from 'vue'
+  import flatpickr from 'flatpickr'
+
+  const bookingDatePicker = ref(null)
+  flatpickr(bookingDatePicker)
 </script>
 
 <template>
   <section class="bg-gray-100" style="background: url('/images/backgrounds/booking-form.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <!-- <div class="absolute w-full h-full bg-black opacity-[0.3]"></div> -->
     <div class="max-w-screen-xl mx-auto">
       <div class="flex">
         <div class="basis-1/2 flex justify-center items-center">
           <div>
-            <h1 class="font-bold text-4xl">The Name of the Hospital Here</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam delectus expedita alias sit saepe quos voluptas, 
+            <h1 class="font-bold text-[4rem] text-white leading-[70px] mb-4">Rosario Maclang Bautista General Hospital</h1>
+            <p class="text-white text-2xl">
+              #ServiceWithSmile
             </p>
           </div>
         </div>
@@ -39,13 +45,13 @@
                 <div class="label">
                   <span class="label-text">Date and time of visit:</span>
                 </div>
-                <input type="datetime-local" placeholder="Email address..." class="input input-bordered w-full" />
+                <input ref="bookingDatePicker" type="text" placeholder="Email address..." class="input input-bordered w-full" />
               </label>
               <label class="form-control">
                 <div class="label">
                   <span class="label-text">Note to hospital:</span>
                 </div>
-                <textarea class="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
+                <textarea class="textarea textarea-bordered h-24"></textarea>
               </label>
               <button class="btn btn-primary mt-2">Make a Booking</button>
             </div>
