@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\BookingFormController;
+use App\Http\Controllers\BookingFormControllerX;
+use App\Http\Controllers\FrontEnd\BookingFormController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [BookingFormController::class, 'index']);
+Route::get('/', [BookingFormControllerX::class, 'index']);
+Route::post('/booking/submit', [BookingFormController::class, 'submit']);
