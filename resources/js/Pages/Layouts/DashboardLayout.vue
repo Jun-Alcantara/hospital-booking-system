@@ -1,34 +1,41 @@
-<script setup></script>
+<script setup>
+  import { router } from '@inertiajs/vue3'
+
+  const logout = () => {
+    router.delete('/console/logout', {
+      onSuccess: (response) => console.log(response)
+    })
+  }
+</script>
 
 <template>
-  <div class="drawer lg:drawer-open">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <slot />
-    </div> 
-    <div class="drawer-side">
-      <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
-      <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-        <!-- Sidebar content here -->
+  <div class="navbar bg-base-100 mb-5 bg-gray-200 shadow-xl">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl">Booking Dashboard</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li><a>Bookings</a></li>
+        <li><a>Patients</a></li>
+        <li><a>Reports</a></li>
         <li>
-          <a>
-            <i class="fa fa-home"></i> Dashboard
-          </a>
-        </li>
-        <li>
-          <a>
-            <i class="fa fa-calendar"></i>
-            Calendar
-          </a>
-        </li>
-        <li>
-          <a>
-            <i class="fa fa-file"></i>
-            Reports
-          </a>
+          <details>
+            <summary>
+              My Account
+            </summary>
+            <ul class="p-2 bg-base-100 rounded-t-none">
+              <li><a>Update Details</a></li>
+              <li>
+                <form @submit.prevent="logout">
+                  <button type="submit">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </details>
         </li>
       </ul>
-    
     </div>
   </div>
+  
+  <slot />
 </template>

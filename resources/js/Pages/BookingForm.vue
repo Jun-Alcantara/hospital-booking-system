@@ -37,8 +37,12 @@
     <div class="max-w-screen-xl mx-auto h-screen">
       <div class="flex flex-col md:flex-row">
         <div class="basis-1/2 flex justify-center items-center">
-          <div class="py-5">
-            <h1 class="font-bold text-4xl text-white text-center">Rosario Maclang Bautista General Hospital</h1>
+          <div>
+            <h1 class="font-bold text-[4.0rem] text-white">Rosario Maclang Bautista General Hospital</h1>
+            <p class="text-white">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, repellendus aperiam. Expedita suscipit quas earum? Quo, deserunt, aperiam aspernatur voluptatum in adipisci quae quis perferendis doloremque veritatis repellendus eum impedit.
+              Est aperiam modi ea tempora voluptas ipsa repellendus nemo dolorum dolor maxime facilis voluptates velit deserunt assumenda totam nulla sequi, similique fugit dolorem vitae nisi quae eaque corporis! Commodi, repudiandae?
+            </p>
           </div>
         </div>
         <div class="basis-1/2 flex justify-center items-center h-screen">
@@ -147,7 +151,7 @@
 
                 </label>
 
-                <button class="btn btn-primary mt-2">Make a Booking</button>
+                <button class="btn btn-primary mt-3">Make a Booking</button>
               </form>
             </div>
           </div>

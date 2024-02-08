@@ -1,39 +1,40 @@
-<script>
-  import DashboardLayout from '../Layouts/DashboardLayout.vue';
+<script setup>
+  import { router, Link } from '@inertiajs/vue3'
+  import dayjs from 'dayjs'
 
-  // export default {
-  //   layout: (h, page) => h(DashboardLayout, [page]),
-  //   layout: DashboardLayout,
-  // }
+  defineProps({
+    bookings: Object,
+    bookingToday: Number,
+    pendingBookings: Number
+  })
+
+  const logout = () => {
+    router.delete('/console/logout', {
+      onSuccess: (response) => console.log(response)
+    })
+  }
+</script>
+
+<script>
+  import DashboardLayout from '../Layouts/DashboardLayout.vue'
+
+  export default {
+    layout: DashboardLayout
+  }
 </script>
 
 <template>
-  <div class="navbar bg-base-100 mb-5 bg-gray-200 shadow-xl">
-    <div class="flex-1">
-      <a class="btn btn-ghost text-xl">Booking Dashboard</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li><a>Bookings</a></li>
-        <li><a>Reports</a></li>
-        <li>
-          <details>
-            <summary>
-              My Account
-            </summary>
-            <ul class="p-2 bg-base-100 rounded-t-none">
-              <li><a>Update Details</a></li>
-              <li><a>Logout</a></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
   <div class="max-w-screen-xl mx-auto pt-5">
-    <div role="alert" class="alert alert-info">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-      <span>You have 4 bookings today.</span>
+    <div class="flex gap-2">
+      <div v-if="bookingToday > 0" role="alert" class="alert alert-info basis-1/2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>You have <strong>{{ bookingToday }}</strong> booking today</span>
+      </div>
+
+      <div v-if="bookingToday > 0" role="alert" class="alert alert-warning basis-1/2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span><strong>{{ pendingBookings }}</strong> pending bookings</span>
+      </div>
     </div>
 
     <div class="py-5 flex justify-end">
@@ -47,108 +48,32 @@
         <!-- head -->
         <thead>
           <tr>
-            <th></th>
+            <th>Reference Number</th>
             <th>Name</th>
             <th>Email</th>
             <th>Booked Date</th>
+            <th>Status</th>
             <th class="flex gap-3 justify-end">
-              Action
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>cy.ganderton@example.com</td>
-            <td>February 15, 2024 11:00 AM</td>
+          <tr v-for="booking in bookings" :key="booking.id">
+            <th>{{ booking.reference_number }}</th>
+            <td>{{ booking.patient?.firstname }} {{ booking.patient?.lastname }}</td>
+            <td>{{ booking.patient?.email }}</td>
+            <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY hh:mm A') }}</td>
+            <td>{{ booking.status_name }}</td>
             <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>heart.hagerty@example.com</td>
-            <td>February 18, 2024 11:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>brice.swyre@example.com</td>
-            <td>February 20, 2024 08:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>brice.swyre@example.com</td>
-            <td>February 20, 2024 08:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>brice.swyre@example.com</td>
-            <td>February 20, 2024 08:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>brice.swyre@example.com</td>
-            <td>February 20, 2024 08:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
-            </th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>brice.swyre@example.com</td>
-            <td>February 20, 2024 08:00 AM</td>
-            <th class="flex gap-3 justify-end">
-              <button class="btn btn-xs btn-primary">Approve</button>
-              <button class="btn btn-xs btn-warning">Reschedule</button>
-              <button class="btn btn-xs btn-error">Cancel</button>
+              <Link :href="`/console/booking/${booking.reference_number}`" class="btn btn-xs btn-primary">View Details</Link>
             </th>
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <dialog id="my_modal_1" class="modal">
-        <div class="modal-box">
-          <h3 class="font-bold text-lg">Hello!</h3>
-          <p class="py-4">Press ESC key or click the button below to close</p>
-          <div class="modal-action">
-            <form method="dialog">
-              <!-- if there is a button in form, it will close the modal -->
-              <button class="btn">Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+    <div class="bg-back text-white p-5">
+
     </div>
   </div>
 </template>

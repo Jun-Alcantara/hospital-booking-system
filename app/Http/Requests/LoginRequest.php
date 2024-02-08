@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class BookingFormRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::guest();
     }
 
     /**
@@ -22,12 +23,8 @@ class BookingFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|max:200',
-            'firstname' => 'required|max:150',
-            'middlename' => 'max:150',
-            'lastname' => 'required|max:150',
-            'date' => 'required',
-            'time' => 'required'
+            'email' => 'required|email|max:150',
+            'password' => 'required|max:100'
         ];
     }
 }
