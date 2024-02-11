@@ -1,5 +1,5 @@
 <script setup>
-  import { router } from '@inertiajs/vue3'
+  import { router, Link } from '@inertiajs/vue3'
 
   const logout = () => {
     router.delete('/console/logout', {
@@ -15,12 +15,34 @@
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">
-        <li><a>Bookings</a></li>
-        <li><a>Patients</a></li>
-        <li><a>Reports</a></li>
+        <li>
+          <Link href="/console/dashboard">
+            <i class="fa fa-address-book"></i>
+            Bookings
+          </Link>
+        </li>
+        <li>
+          <a>
+            <i class="fa fa-users"></i>
+            Patients
+          </a>
+        </li>
+        <li>
+          <a>
+            <i class="fa fa-file-pdf"></i>
+            Reports
+          </a>
+        </li>
+        <li>
+          <Link href="/console/settings">
+            <i class="fa fa-cogs"></i>
+            Booking Settings
+          </Link>
+        </li>
         <li>
           <details>
             <summary>
+              <i class="fa fa-user"></i>
               My Account
             </summary>
             <ul class="p-2 bg-base-100 rounded-t-none">

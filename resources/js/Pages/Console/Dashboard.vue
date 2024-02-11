@@ -1,5 +1,5 @@
 <script setup>
-  import { router, Link } from '@inertiajs/vue3'
+  import { Link } from '@inertiajs/vue3'
   import dayjs from 'dayjs'
 
   defineProps({
@@ -7,12 +7,6 @@
     bookingToday: Number,
     pendingBookings: Number
   })
-
-  const logout = () => {
-    router.delete('/console/logout', {
-      onSuccess: (response) => console.log(response)
-    })
-  }
 </script>
 
 <script>
