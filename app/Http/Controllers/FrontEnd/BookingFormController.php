@@ -35,6 +35,11 @@ class BookingFormController extends Controller
         return redirect()->route('booking.status', $booking);
     }
 
+    public function showHealthDeclarationForm(Booking $booking)
+    {
+        return inertia('HealthDeclarationForm');
+    }
+
     public function showStatus(Booking $booking)
     {
         $patient = $booking->patient;
