@@ -27,11 +27,5 @@ class BookingSettingsController extends Controller
         ]);
 
         return back()->with('notification.success', 'Settings updated');
-
-        // if (isset($request->blockDates) && is_array($request->blockDates)) {
-        //     foreach ($request->blockDates as $date) {
-        //         BookingBlockedDates::create();
-        //     }
-        // }
     }
 }

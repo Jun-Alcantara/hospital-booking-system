@@ -1,8 +1,10 @@
 <script setup>
   import { ref } from 'vue'
-  import { useForm } from '@inertiajs/vue3'
+  import { useForm, router } from '@inertiajs/vue3'
   import flatPickr from 'vue-flatpickr-component'
   import dayjs from 'dayjs'
+  import axios from 'axios'
+
   import 'flatpickr/dist/flatpickr.css'
 
   const props = defineProps({
@@ -36,6 +38,16 @@
         console.log(response)
       }
     })
+  }
+
+  const timeSlots = ref({})
+
+  const getTimeSlots = () => {
+    axios.get(`/booking/available-time-slots?date=${form.date}`)
+      .then((response) => {
+        console.log(response)
+        timeSlots.value = response.data
+      })
   }
 </script>
 
@@ -118,6 +130,7 @@
                       :class="{'input-error text-error': form.errors.date}"
                       v-model="form.date"
                       :config="config"
+                      @change="getTimeSlots"
                     />
                     <div class="text-error" v-if="form.errors.date">{{ form.errors.date }}</div>
                   </label>
@@ -131,15 +144,15 @@
                       class="select select-bordered w-full"
                       :class="{'input-error text-error': form.errors.time}"
                     >
-                      <option disabled selected>Select time of visit</option>
-                      <option value="10">10:00 AM</option>
-                      <option value="11">11:00 AM</option>
-                      <option value="13">01:00 PM</option>
-                      <option value="14">02:00 PM</option>
-                      <option value="15">03:00 PM</option>
-                      <option value="16">04:00 PM</option>
-                      <option value="17">05:00 PM</option>
-                      <option value="18">06:00 PM</option>
+                      <option disabled selected>Select date</option>
+                      <option
+                        v-for="slot in timeSlots"
+                        v-if="timeSlots.length > 0"
+                        :disabled="!slot.is_available"
+                        :value="slot.id"
+                      >
+                        {{ slot.text }} {{ !slot.is_available ? '(fully booked)' : '' }}
+                      </option>
                     </select>
                     <div class="text-error" v-if="form.errors.time">{{ form.errors.time }}</div>
                   </label>

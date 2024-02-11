@@ -8,6 +8,8 @@ use App\Http\Requests\BookingFormRequest;
 use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\Booking;
+use App\Models\BookingSettings;
+use Illuminate\Http\Request;
 
 class BookingFormController extends Controller
 {
@@ -47,5 +49,48 @@ class BookingFormController extends Controller
         $booking->status_name = $booking->status_name;
 
         return inertia('BookingStatus', compact('booking', 'patient'));
+    }
+
+    public function availableTimeSlots(Request $request)
+    {
+        $settings = BookingSettings::find(1);
+
+        $duration = $settings->visit_end - $settings->visit_start;
+        $maxBookingPerSlot = round($settings->max_booking_per_day / $duration);
+
+        $fullyBookedSlots = Booking::selectRaw("DATE_FORMAT(booking_date, '%Y-%m-%d %H:00') AS booking_hour")
+            ->selectRaw('COUNT(*) AS total_bookings')
+            ->where('booking_date', 'LIKE', "%$request->date%")
+            ->groupByRaw("DATE_FORMAT(booking_date, '%Y-%m-%d %H:00')")
+            ->havingRaw('COUNT(*) >= ?', [$maxBookingPerSlot])
+            ->get()
+            ->map(fn ($slot) => intval(Carbon::parse($slot->booking_hour)->format('H')));
+
+        $result = [];
+
+        for ($i = $settings->visit_start; $i <= $settings->visit_end; $i++) {
+            $ampm = 'AM';
+            $hour = $i;
+
+            if ($i >= 13) {
+                $ampm = 'PM';
+                $hour = $hour - 12;
+            }
+
+            $availability = true;
+            if (in_array($i, $fullyBookedSlots->toArray())) {
+                $availability = false;
+            }
+
+            $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
+
+            $result[] = [
+                'text' => "{$hour}:00 {$ampm}",
+                'id' => $i,
+                'is_available' => $availability
+            ];
+        }
+
+        return $result;
     }
 }

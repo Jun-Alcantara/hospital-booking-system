@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BookingFormController::class, 'index']);
 Route::get('/', [BookingFormControllerX::class, 'index']);
 Route::post('booking/submit', [BookingFormController::class, 'submit']);
+Route::get('booking/available-time-slots', [BookingFormController::class, 'availableTimeSlots']);
 Route::get('booking/status/{booking}', [BookingFormController::class, 'showStatus'])->name('booking.status');
 Route::get('booking/{booking}/health-declaration-form', [BookingFormController::class, 'showHealthDeclarationForm']);
 

@@ -11,9 +11,9 @@
   })
 
   const form = useForm({
-    maxBookingPerDay: props.settings.max_booking_per_day,
-    visitStart: props.settings.visit_start,
-    visitEnd: props.settings.visit_end,
+    maxBookingPerDay: props.settings?.max_booking_per_day,
+    visitStart: props.settings?.visit_start,
+    visitEnd: props.settings?.visit_end,
     blockDates: null
   })
 
@@ -33,11 +33,11 @@
     })
   }
 
+  const start = ref(6), end = ref(18);
+
   const visitStartTimeSlot = computed(() => {
-    const start = 6, end = 18;
-
     const result = [];
-    for (let i = start; i <= end; i++) {
+    for (let i = start.value; i <= end.value; i++) {
       let timeSlot = i;
       let ampm = 'AM';
 
@@ -47,7 +47,7 @@
       }
 
       result.push({
-        text: `${timeSlot}:00 ${ampm}`,
+        text: `${timeSlot}:00 ${ampm}`.padStart(1, '0'),
         num: i
       });
     }
@@ -55,12 +55,10 @@
     return result;
   })
 
+  const endTimeslotStart = ref(6);
   const visitEndTimeSlot = computed(() => {
-    console.log(form.visitEnd)
-    const start = form.visitEnd ?? 6, end = 18;
-
     const result = [];
-    for (let i = start; i <= end; i++) {
+    for (let i = parseInt(endTimeslotStart.value) + 1; i <= end.value; i++) {
       let timeSlot = i;
       let ampm = 'AM';
 
@@ -77,6 +75,10 @@
 
     return result;
   })
+
+  const updateStartMin = (e) => {
+    endTimeslotStart.value = e.target.value
+  }
 </script>
 
 <script>
@@ -113,27 +115,22 @@
         </div>
 
         <div class="w-1/3">
-          <!-- <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Visiting Starts At:</span>
-            </div>
-            <input
-              v-model="form.visitStart"
-              type="time"
-              class="input input-bordered w-full"
-              step="3600000"
-            />
-          </label> -->
           <label class="form-control w-full">
             <div class="label">
               <span class="label-text" :class="{'text-error': form.errors.visitStart}">Visiting Starts At:</span>
             </div>
             <select 
               v-model="form.visitStart"
+              @change="updateStartMin"
               class="select select-bordered w-full"
               :class="{'input-error text-error': form.errors.visitStart}"
             >
-              <option v-for="h in visitStartTimeSlot" value="{{ h.num }}">{{ h.text }}</option>
+              <option 
+                v-for="h in visitStartTimeSlot" 
+                :value="h.num"
+              >
+                {{ h.text }}
+              </option>
             </select>
             <div class="text-error" v-if="form.errors.visitStart">{{ form.errors.visitStart }}</div>
           </label>
@@ -142,27 +139,23 @@
         <div class="w-1/3">
           <label class="form-control w-full">
             <div class="label">
-              <span class="label-text" :class="{'text-error': form.errors.visitStart}">Visiting Starts At:</span>
+              <span class="label-text" :class="{'text-error': form.errors.visitEnd}">Visiting Starts At:</span>
             </div>
             <select 
-              v-model="form.visitStart"
+              v-model="form.visitEnd"
               class="select select-bordered w-full"
               :class="{'input-error text-error': form.errors.visitStart}"
             >
-              <option v-for="h in visitEndTimeSlot" value="{{ h.num }}">{{ h.text }}</option>
+              <option 
+                v-for="h in visitEndTimeSlot" 
+                :key="h.num"
+                :value="h.num"
+              >
+                {{ h.text }}
+              </option>
             </select>
-            <div class="text-error" v-if="form.errors.visitStart">{{ form.errors.visitStart }}</div>
+            <div class="text-error" v-if="form.errors.visitEnd">{{ form.errors.visitEnd }}</div>
           </label>
-          <!-- <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Visiting Ends At:</span>
-            </div>
-            <input 
-              v-model="form.visitEnd"
-              type="time"
-              class="input input-bordered w-full"
-            />
-          </label> -->
         </div>
       </div>
       
