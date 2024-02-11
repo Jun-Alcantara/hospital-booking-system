@@ -2,13 +2,20 @@
   import { ref } from 'vue'
   import { useForm } from '@inertiajs/vue3'
   import flatPickr from 'vue-flatpickr-component'
+  import dayjs from 'dayjs'
   import 'flatpickr/dist/flatpickr.css'
+
+  const props = defineProps({
+    blockDates: Array
+  })
 
   const config = ref({
     wrap: true, // set wrap to true only when using 'input-group'
     altFormat: 'M j, Y',
     altInput: true,
-    dateFormat: 'Y-m-d',        
+    dateFormat: 'Y-m-d',
+    disable: Object.values(props.blockDates),
+    minDate: dayjs().add(1, 'd').format('YYYY-MM-DD')
   });
   
 

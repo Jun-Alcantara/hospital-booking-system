@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackOffice\BookingController;
+use App\Http\Controllers\BackOffice\BookingSettingsController;
 use App\Http\Controllers\BookingFormControllerX;
 use App\Http\Controllers\FrontEnd\BookingFormController;
 use App\Http\Controllers\BookingDashboardController;
@@ -31,11 +32,15 @@ Route::get('console/login', [LoginController::class, 'show'])
 Route::post('console/login', [LoginController::class, 'login']);
 
 Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
-    Route::get('dashboard', [BookingDashboardController::class, 'index'])->name('console.dashboard');
     Route::delete('logout', [LoginController::class, 'logout'])->name('console.logout');
+    Route::get('dashboard', [BookingDashboardController::class, 'index'])->name('console.dashboard');
+    Route::get('settings', [BookingSettingsController::class,'showSettings'])->name('booking.settings');
+    Route::patch('settings', [BookingSettingsController::class, 'updateSettings'])->name('booking.settings.update');
+
     Route::get('booking/{booking}', [BookingController::class, 'show']);
     Route::patch('booking/{booking}/approve', [BookingController::class, 'approve']);
     Route::patch('booking/{booking}/cancel', [BookingController::class, 'cancel']);
 
+    // Test routes
     Route::get('booking/{booking}/send-notification', [BookingController::class, 'sendNotification']);
 });
