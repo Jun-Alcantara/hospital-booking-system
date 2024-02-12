@@ -17,7 +17,7 @@ class BookingFormControllerX extends Controller
         $blockDates = Booking::selectRaw('DATE_FORMAT(booking_date, "%Y-%m-%d") as date')
             ->selectRaw('COUNT(*) as booking_count')
             ->groupBy(DB::raw('DATE_FORMAT(booking_date, "%Y-%m-%d")'))
-            ->havingRaw('COUNT(*) >= ?', [$settings->max_booking_per_day])
+            ->havingRaw('COUNT(*) >= ?', [$settings->max_booking_per_day ?? 250])
             ->get()
             ->pluck('date');
 
