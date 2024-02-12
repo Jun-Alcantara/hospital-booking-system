@@ -1,10 +1,12 @@
 <script setup>
   import dayjs from 'dayjs'
   import { router, Link } from '@inertiajs/vue3'
+  import HealthDeclarationFormView from '../Components/HealthDeclarationFormView.vue';
 
   const props = defineProps({
     booking: Object,
-    patient: Object
+    patient: Object,
+    healthDeclarationForm: Object
   })
 
   const approve = () => {
@@ -77,6 +79,20 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div>
+      <div class="flex justify-end">
+        <button class="btn btn-neutral">
+          <i class="fa fa-print"></i>
+          Print Health Declaration Form
+        </button>
+      </div>
+      <div class="card shadow-lg">
+        <div class="card-body px-[50px]">
+          <HealthDeclarationFormView :form="healthDeclarationForm"  />
+        </div>
+      </div>
     </div>
 
     <dialog id="approve_confirmation_modal" class="modal">

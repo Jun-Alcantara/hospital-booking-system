@@ -7,16 +7,7 @@
     @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/661c1762f6.js" crossorigin="anonymous"></script>
     @inertiaHead
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId            : '1368287130495002',
-          xfbml            : true,
-          version          : 'v19.0'
-        });
-      };
-    </script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    {{-- <scriwebsync defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></scriwebsync> --}}
   </head>
   <body>
     @inertia
@@ -45,7 +36,7 @@
     </script> --}}
 
     
-    <div id="fb-root"></div>
-    <div id="fb-customer-chat" class="fb-customerchat"></div>
+    {{-- <div id="fb-root"></div>
+    <div id="fb-customer-chat" class="fb-customerchat"></div> --}}
   </body>
 </html>

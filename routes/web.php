@@ -24,7 +24,8 @@ Route::get('/', [BookingFormControllerX::class, 'index']);
 Route::post('booking/submit', [BookingFormController::class, 'submit']);
 Route::get('booking/available-time-slots', [BookingFormController::class, 'availableTimeSlots']);
 Route::get('booking/status/{booking}', [BookingFormController::class, 'showStatus'])->name('booking.status');
-Route::get('booking/{booking}/health-declaration-form', [BookingFormController::class, 'showHealthDeclarationForm']);
+Route::get('booking/{booking}/health-declaration-form', [BookingFormController::class, 'showHealthDeclarationForm'])->name('booking.healthdeclarationform');
+Route::post('booking/{booking}/health-declaration-form', [BookingFormController::class, 'submitHealthDeclarationForm']);
 
 Route::get('console/login', [LoginController::class, 'show'])
     ->name('login')

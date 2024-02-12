@@ -12,8 +12,11 @@ class BookingController extends Controller
     {
         $patient = $booking->patient;
         $booking->status_name = $booking->status_name;
+        $healthDeclarationForm = $booking->healthDeclarationForm;
 
-        return inertia('Console/BookingDetails', compact('booking', 'patient'));
+        $healthDeclarationForm->questions = json_decode($healthDeclarationForm->questions);
+
+        return inertia('Console/BookingDetails', compact('booking', 'patient', 'healthDeclarationForm'));
     }
 
     public function approve(Booking $booking)

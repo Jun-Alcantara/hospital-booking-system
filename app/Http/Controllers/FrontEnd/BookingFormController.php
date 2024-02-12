@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\Booking;
 use App\Models\BookingSettings;
+use App\Models\PatientHealthDeclarationForm;
 use Illuminate\Http\Request;
 
 class BookingFormController extends Controller
@@ -34,12 +35,35 @@ class BookingFormController extends Controller
 
         // event(new BookingReceive($booking));
 
-        return redirect()->route('booking.status', $booking);
+        return redirect()->route('booking.healthdeclarationform', $booking);
     }
 
     public function showHealthDeclarationForm(Booking $booking)
     {
-        return inertia('HealthDeclarationForm');
+        $patient = $booking->patient;
+
+        return inertia('HealthDeclarationForm', compact('patient', 'booking'));
+    }
+
+    public function submitHealthDeclarationForm(Request $request, Booking $booking)
+    {
+        $questions = $request->answers;
+
+        PatientHealthDeclarationForm::create([
+            'booking_id' => $booking->id,
+            'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
+            'lastname' => $request->lastname,
+            'gender' => $request->gender,
+            'dob' => Carbon::parse($request->dob)->format('Y-m-d'),
+            'age' => intval($request->age),
+            'contact_number' => $request->contact_number,
+            'occupation' => $request->occupation,
+            'address' => $request->address,
+            'questions' => json_encode($questions),
+        ]);
+
+        return redirect()->route('booking.status', $booking);
     }
 
     public function showStatus(Booking $booking)
