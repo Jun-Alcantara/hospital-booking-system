@@ -18,7 +18,7 @@ class Booking extends Model
     public const COMPLETED = 5;
 
     protected $fillable = [
-        'reference_number', 'patient_id', 'booking_date', 'note', 'status'
+        'reference_number', 'patient_id', 'booking_date', 'note', 'status', 'clinic_id', 'clinic_department_id'
     ];
 
     public $casts = [
@@ -68,5 +68,15 @@ class Booking extends Model
     public function healthDeclarationForm(): HasOne
     {
         return $this->hasONe(PatientHealthDeclarationForm::class);
+    }
+
+    public function clinic(): BelongsTo
+    {
+        return $this->belongsTo(Clinic::class);
+    }
+
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(ClinicDepartment::class, 'clinic_department_id');
     }
 }

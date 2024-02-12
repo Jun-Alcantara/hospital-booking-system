@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackOffice\BookingController;
 use App\Http\Controllers\BackOffice\BookingSettingsController;
+use App\Http\Controllers\BackOffice\ClinicController;
 use App\Http\Controllers\BookingFormControllerX;
 use App\Http\Controllers\FrontEnd\BookingFormController;
 use App\Http\Controllers\BookingDashboardController;
@@ -42,6 +43,8 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     Route::get('booking/{booking}', [BookingController::class, 'show']);
     Route::patch('booking/{booking}/approve', [BookingController::class, 'approve']);
     Route::patch('booking/{booking}/cancel', [BookingController::class, 'cancel']);
+
+    Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 
     // Test routes
     Route::get('booking/{booking}/send-notification', [BookingController::class, 'sendNotification']);

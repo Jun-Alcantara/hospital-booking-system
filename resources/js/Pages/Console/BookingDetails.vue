@@ -1,16 +1,29 @@
 <script setup>
   import dayjs from 'dayjs'
-  import { router, Link } from '@inertiajs/vue3'
+  import { ref } from 'vue'
+  import { router, Link, useForm } from '@inertiajs/vue3'
   import HealthDeclarationFormView from '../Components/HealthDeclarationFormView.vue';
 
   const props = defineProps({
     booking: Object,
     patient: Object,
-    healthDeclarationForm: Object
+    healthDeclarationForm: Object,
+    clinics: Object
   })
 
+  const form = useForm({
+    clinic: null,
+    department: null
+  })
+
+  const departments = ref({})
+
   const approve = () => {
-    router.patch(`/console/booking/${props.booking.reference_number}/approve`)
+    form.patch(`/console/booking/${props.booking.reference_number}/approve`, {
+      onSuccess: (response) => {
+        console.log(response)
+      }
+    })
 
     approve_confirmation_modal.close();
   }
@@ -20,10 +33,18 @@
 
     cancel_confirmation_modal.close();
   }
+
+  const loadDepartments = () => {
+    if (form.clinic) {
+      axios.get(`/console/clinic/${form.clinic}/departments`)
+        .then((response) => departments.value = response.data)
+    }
+  }
 </script>
 
 <script>
   import DashboardLayout from '../Layouts/DashboardLayout.vue';
+import axios from 'axios';
 
   export default {
     layout: DashboardLayout
@@ -77,17 +98,21 @@
             <th style="min-width: 200px;">Patient's Note</th>
             <td>{{ booking.note }}</td>
           </tr>
+          <tr>
+            <th>Clinic / Department</th>
+            <td>{{ booking.clinic?.name }} / {{ booking.department?.name }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div>
-      <div class="flex justify-end">
+      <!-- <div class="flex justify-end">
         <button class="btn btn-neutral">
           <i class="fa fa-print"></i>
           Print Health Declaration Form
         </button>
-      </div>
+      </div> -->
       <div class="card shadow-lg">
         <div class="card-body px-[50px]">
           <HealthDeclarationFormView :form="healthDeclarationForm"  />
@@ -98,6 +123,25 @@
     <dialog id="approve_confirmation_modal" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Do you want to approve {{ patient.firstname }}'s appointment?</h3>
+        <div class="mb-5 mt-2">
+          <label class="form-control w-full">
+            <div class="label">
+              <span class="label-text">Assign to Clinic</span>
+            </div>
+            <select class="select select-bordered" @change="loadDepartments" v-model="form.clinic">
+              <option v-for="clinic in clinics" :value="clinic.id">{{ clinic.name }}</option>
+            </select>
+          </label>
+
+          <label class="form-control w-full mt-4" v-if="departments.length > 0">
+            <div class="label">
+              <span class="label-text">Department</span>
+            </div>
+            <select class="select select-bordered" v-model="form.department">
+              <option v-for="department in departments" :value="department.id">{{ department.name }}</option>
+            </select>
+          </label>
+        </div>
         <div class="flex justify-center gap-2 mt-5">
           <button @click="approve" class="btn btn-primary">Approve</button>
           <form method="dialog">

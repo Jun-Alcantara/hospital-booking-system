@@ -4,7 +4,9 @@ namespace App\Http\Controllers\BackOffice;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Clinic;
 use App\Notifications\BookingReceive;
+use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
@@ -14,13 +16,21 @@ class BookingController extends Controller
         $booking->status_name = $booking->status_name;
         $healthDeclarationForm = $booking->healthDeclarationForm;
 
-        $healthDeclarationForm->questions = json_decode($healthDeclarationForm->questions);
+        if ($healthDeclarationForm) {
+            $healthDeclarationForm->questions = json_decode($healthDeclarationForm->questions);
+        }
 
-        return inertia('Console/BookingDetails', compact('booking', 'patient', 'healthDeclarationForm'));
+        $booking->load(['clinic', 'department']);
+
+        $clinics = Clinic::all();
+
+        return inertia('Console/BookingDetails', compact('booking', 'patient', 'healthDeclarationForm', 'clinics'));
     }
 
-    public function approve(Booking $booking)
+    public function approve(Request $request, Booking $booking)
     {
+        $booking->clinic_id = $request->clinic;
+        $booking->clinic_department_id = $request->department;
         $booking->status = Booking::APPROVED;
         $booking->save();
 

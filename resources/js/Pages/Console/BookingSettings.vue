@@ -91,7 +91,7 @@
 
 <template>
   <div class="max-w-screen-xl mx-auto">
-    <h1 class="text-primary text-3xl">Booking Settings</h1>
+    <h1 class="text-3xl">Booking Settings</h1>
     <hr class="my-5">
     
     <div v-if="showAlert" role="alert" class="alert alert-success mb-5">
