@@ -166,7 +166,7 @@
                   <textarea 
                     v-model="form.note"  
                     class="textarea textarea-bordered h-24"
-                    placeholder="Bio"
+                    placeholder="My symptoms are ..."
                   ></textarea>
 
                 </label>

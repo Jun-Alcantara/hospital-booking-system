@@ -67,7 +67,7 @@
           </tr>
           <tr>
             <th>Booked Date</th>
-            <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY HH:mm AA') }}</td>
+            <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY HH:mm A') }}</td>
           </tr>
           <tr>
             <th>Patient's Email</th>

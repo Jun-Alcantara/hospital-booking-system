@@ -15,7 +15,7 @@
 <template>
   <div class="flex">
     <div class="basis-1/5">
-      <img src="http://localhost:8000/images/qc-logo.png" alt="" class="aspect-square max-w-[193px] object-contain">
+      <img src="http://rmb-gh.site/images/qc-logo.png" alt="" class="aspect-square max-w-[193px] object-contain">
     </div>
     <div class="basis-3/5">
       <span class="text-center block w-full text-xl font-semibold">
@@ -33,7 +33,7 @@
       <h3 class="font-semibold text-xl text-center">HOSPITAL INFORMATION MANAGEMENT <br> COVID 19 - TB SCREENING TOOL</h3>
     </div>
     <div class="basis-1/5">
-      <img src="http://localhost:8000/images/logo.png" alt="" class="aspect-square max-w-[193px]">
+      <img src="http://rmb-gh.site/images/logo.png" alt="" class="aspect-square max-w-[193px]">
     </div>
   </div>
   <table>

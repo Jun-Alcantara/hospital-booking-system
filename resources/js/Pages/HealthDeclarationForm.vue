@@ -46,8 +46,7 @@
       q8: null,
       q9: null,
       q10: null,
-      q11: null,
-      q12: null
+      q11: null
     }
   })
 
@@ -159,7 +158,6 @@
                   v-model="form.dob"
                   @change="calculateAge"
                   :config="flatpickrConfig"
-                  placeholder="Select date of visit"
                   class="input input-bordered w-full cursor-pointer"
                 />
               </label>
@@ -627,39 +625,12 @@
           <div class="mt-5">
             <div class="card bg-base-200 rounded-box px-3 py-5 flex flex-col">
               <div>
-                Ikaw ba ay naninigarilyo?
-              </div>
-              <div class="flex flex-row gap-5 mt-3">
-                <label for="yes1" class="flex gap-1">
-                  <input
-                    v-model="form.answers.q11"
-                    type="radio"
-                    value="1"
-                    class="radio"
-                  /> Oo
-                </label>
-                <label for="yes2" class="flex gap-1">
-                  <input
-                    v-model="form.answers.q11"
-                    type="radio"
-                    value="2"
-                    class="radio"
-                  /> Hindi
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Q12 -->
-          <div class="mt-5">
-            <div class="card bg-base-200 rounded-box px-3 py-5 flex flex-col">
-              <div>
                 Ikaw ba ay nahahanay sa mga Indigent o Myembro ng 4Ps o CCT?
               </div>
               <div class="flex flex-row gap-5 mt-3">
                 <label for="yes1" class="flex gap-1">
                   <input
-                    v-model="form.answers.q12"
+                    v-model="form.answers.q11"
                     type="radio"
                     value="1"
                     class="radio"
@@ -667,7 +638,7 @@
                 </label>
                 <label for="yes2" class="flex gap-1">
                   <input
-                    v-model="form.answers.q12"
+                    v-model="form.answers.q11"
                     type="radio"
                     value="2"
                     class="radio"
