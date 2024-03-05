@@ -1,12 +1,20 @@
 <script setup>
-  import { Link } from '@inertiajs/vue3'
-  import dayjs from 'dayjs'
+  import { ref } from 'vue'
+
+  import BookingList from './Dashboard/BookingList.vue'
+  import BookingCalendar from './Dashboard/BookingCalendar.vue'
 
   defineProps({
     bookings: Object,
     bookingToday: Number,
     pendingBookings: Number
   })
+
+  const activeTab = ref(1)
+  
+  const handleTabClick = (tabIndex) => {
+    activeTab.value = tabIndex
+  }
 </script>
 
 <script>
@@ -31,43 +39,19 @@
       </div>
     </div>
 
-    <div class="py-5 flex justify-end">
-      <label class="form-control w-full max-w-xs">
-        <input type="text" placeholder="Search" class="input input-bordered w-full max-w-xs" />
-      </label>
+    <div class="flex justify-center">
+      <div role="tablist" class="tabs tabs-boxed">
+        <a @click="handleTabClick(1)" role="tab" class="tab" :class="{'tab-active': activeTab == 1}">
+          <i class="fa fa-calendar"></i> &nbsp; Booking Calendar
+        </a>
+        <a @click="handleTabClick(2)" role="tab" class="tab" :class="{'tab-active': activeTab == 2}">
+          <i class="fa fa-file"></i> &nbsp; Booking List
+        </a>
+      </div>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="table table-zebra">
-        <!-- head -->
-        <thead>
-          <tr>
-            <th>Reference Number</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Booked Date</th>
-            <th>Status</th>
-            <th class="flex gap-3 justify-end">
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="booking in bookings" :key="booking.id">
-            <th>{{ booking.reference_number }}</th>
-            <td>{{ booking.patient?.firstname }} {{ booking.patient?.lastname }}</td>
-            <td>{{ booking.patient?.email }}</td>
-            <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY hh:mm A') }}</td>
-            <td>{{ booking.status_name }}</td>
-            <th class="flex gap-3 justify-end">
-              <Link :href="`/console/booking/${booking.reference_number}`" class="btn btn-xs btn-primary">View Details</Link>
-            </th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <BookingCalendar v-if="activeTab == 1" />
+    <BookingList v-if="activeTab == 2" :bookings="bookings" />
 
-    <div class="bg-back text-white p-5">
-
-    </div>
   </div>
 </template>

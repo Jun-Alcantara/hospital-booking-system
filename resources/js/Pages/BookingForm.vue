@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue'
-  import { useForm, router } from '@inertiajs/vue3'
+  import { useForm } from '@inertiajs/vue3'
+  import { debounce } from "lodash"
   import flatPickr from 'vue-flatpickr-component'
   import dayjs from 'dayjs'
   import axios from 'axios'
@@ -8,15 +9,17 @@
   import 'flatpickr/dist/flatpickr.css'
 
   const props = defineProps({
-    blockDates: Array
+    disabledDates: Array
   })
+
+  console.log(Object.values(props.disabledDates))
 
   const config = ref({
     wrap: true, // set wrap to true only when using 'input-group'
     altFormat: 'M j, Y',
     altInput: true,
     dateFormat: 'Y-m-d',
-    disable: Object.values(props.blockDates),
+    disable: props.disabledDates,
     minDate: dayjs().add(1, 'd').format('YYYY-MM-DD')
   });
   
@@ -45,10 +48,28 @@
   const getTimeSlots = () => {
     axios.get(`/booking/available-time-slots?date=${form.date}`)
       .then((response) => {
-        console.log(response)
         timeSlots.value = response.data
       })
   }
+
+  const handleEmailType = debounce( async (e) => {
+    let email = e.target.value
+    
+    axios.get(`/api/patients?email=${email}`)
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          let patient = response.data
+
+          form.firstname = patient.firstname
+          form.middlename = patient.middlename
+          form.lastname = patient.lastname
+        } else {
+          form.firstname = null
+          form.middlename = null
+          form.lastname = null
+        }
+      })
+  }, 300)
 </script>
 
 <template>
@@ -56,12 +77,11 @@
     <div class="max-w-screen-xl mx-auto h-screen">
       <div class="flex flex-col md:flex-row">
         <div class="basis-1/2 flex justify-center items-center">
-          <div>
-            <h1 class="font-bold text-[4.0rem] text-white">Rosario Maclang Bautista General Hospital</h1>
-            <p class="text-white">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe, repellendus aperiam. Expedita suscipit quas earum? Quo, deserunt, aperiam aspernatur voluptatum in adipisci quae quis perferendis doloremque veritatis repellendus eum impedit.
-              Est aperiam modi ea tempora voluptas ipsa repellendus nemo dolorum dolor maxime facilis voluptates velit deserunt assumenda totam nulla sequi, similique fugit dolorem vitae nisi quae eaque corporis! Commodi, repudiandae?
-            </p>
+          <div class="flex flex-col items-center justify-center">
+            <figure class="w-[250px] aspect-square">
+              <img :src="`/images/logo.png`" class="w-full h-full object-cover">
+            </figure>
+            <h1 class="font-bold text-[4.0rem] text-white text-center">Rosario Maclang Bautista General Hospital</h1>
           </div>
         </div>
         <div class="basis-1/2 flex justify-center items-center h-screen">
@@ -69,6 +89,23 @@
           <div class="card w-full bg-base-100 shadow-xl">
             <div class="card-body">
               <form @submit.prevent="submit">
+
+                <label class="form-control w-full">
+                  <div class="label">
+                    <span class="label-text " :class="{'text-error': form.errors.email}">Email address:</span>
+                  </div>
+
+                  <input 
+                    v-model="form.email"
+                    @input="handleEmailType"
+                    type="text" 
+                    placeholder="Email address" 
+                    class="input input-bordered w-full"
+                    :class="{'input-error text-error': form.errors.email}"
+                  />
+                  <div class="text-error" v-if="form.errors.email">{{ form.errors.email }}</div>
+                </label>
+
                 <label class="form-control w-full">
                   <div class="label">
                     <span class="label-text">What is your name?</span>
@@ -101,21 +138,6 @@
                   </div>
                   <div class="text-error" v-if="form.errors.firstname">{{ form.errors.firstname }}</div>
                   <div class="text-error" v-if="form.errors.firstname">{{ form.errors.lastname }}</div>
-                </label>
-
-                <label class="form-control w-full">
-                  <div class="label">
-                    <span class="label-text " :class="{'text-error': form.errors.email}">Email address:</span>
-                  </div>
-
-                  <input 
-                    v-model="form.email"
-                    type="text" 
-                    placeholder="Email address" 
-                    class="input input-bordered w-full"
-                    :class="{'input-error text-error': form.errors.email}"
-                  />
-                  <div class="text-error" v-if="form.errors.email">{{ form.errors.email }}</div>
                 </label>
 
                 <div class="flex gap-2">
@@ -160,7 +182,7 @@
 
                 <label class="form-control">
                   <div class="label">
-                    <span class="label-text">Note to hospital:</span>
+                    <span class="label-text">Purpose Of Visit:</span>
                   </div>
                   
                   <textarea 

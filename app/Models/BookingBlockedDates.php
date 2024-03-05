@@ -9,5 +9,5 @@ class BookingBlockedDates extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date'];
+    protected $fillable = ['date', 'reason'];
 }

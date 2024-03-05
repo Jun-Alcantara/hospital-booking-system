@@ -15,6 +15,7 @@ class Booking extends Model
     public const APPROVED = 1;
     public const RESCHEDULED = 2;
     public const CANCELED = 3;
+    public const FOR_RESCHEDULING = 4;
     public const COMPLETED = 5;
 
     protected $fillable = [

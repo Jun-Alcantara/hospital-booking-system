@@ -115,7 +115,7 @@ import axios from 'axios';
       </div> -->
       <div class="card shadow-lg">
         <div class="card-body px-[50px]">
-          <HealthDeclarationFormView :form="healthDeclarationForm"  />
+          <HealthDeclarationFormView v-if="healthDeclarationForm" :form="healthDeclarationForm"  />
         </div>
       </div>
     </div>

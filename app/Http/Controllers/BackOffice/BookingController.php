@@ -49,6 +49,7 @@ class BookingController extends Controller
 
     public function sendNotification(Booking $booking)
     {
+        // return $booking->patient;
         return $booking->patient->notify(new BookingReceive);
     }
 }

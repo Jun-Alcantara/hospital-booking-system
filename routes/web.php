@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\BookingsController;
+use App\Http\Controllers\API\FullCalendarEventsController;
+use App\Http\Controllers\API\PatientController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BackOffice\BookingCalendarController;
 use App\Http\Controllers\BackOffice\BookingController;
 use App\Http\Controllers\BackOffice\BookingSettingsController;
 use App\Http\Controllers\BackOffice\ClinicController;
@@ -40,6 +44,8 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     Route::get('settings', [BookingSettingsController::class,'showSettings'])->name('booking.settings');
     Route::patch('settings', [BookingSettingsController::class, 'updateSettings'])->name('booking.settings.update');
 
+    Route::get('booking-calendar', [BookingCalendarController::class, 'index'])->name('booking.calendar.index');
+
     Route::get('booking/{booking}', [BookingController::class, 'show']);
     Route::patch('booking/{booking}/approve', [BookingController::class, 'approve']);
     Route::patch('booking/{booking}/cancel', [BookingController::class, 'cancel']);
@@ -48,4 +54,14 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
 
     // Test routes
     Route::get('booking/{booking}/send-notification', [BookingController::class, 'sendNotification']);
+
+    Route::prefix('api')->group(function () {
+        Route::get('bookings', [BookingsController::class, 'bookings']);
+        Route::post('block-date', [BookingsController::class, 'blockDate']);
+        Route::get('full-calendar/events', [FullCalendarEventsController::class, 'events']);
+    });
+});
+
+Route::prefix('api')->group(function () {
+    Route::get('patients', [PatientController::class, 'searchEmail']);
 });

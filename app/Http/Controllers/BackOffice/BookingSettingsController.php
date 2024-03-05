@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BookingSettings;
 use App\Models\BookingBlockedDates;
+use App\Models\Booking;
 
 class BookingSettingsController extends Controller
 {
@@ -27,5 +28,10 @@ class BookingSettingsController extends Controller
         ]);
 
         return back()->with('notification.success', 'Settings updated');
+    }
+
+    public function manageDates()
+    {
+        return inertia('Console/BookingCalendar/Index');
     }
 }
