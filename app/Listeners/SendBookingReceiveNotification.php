@@ -6,7 +6,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 use App\Events\BookingReceive;
-use App\Notifications\BookingReceive as BookingReceiveNotification;
+use App\Notifications\BookingReceived;
 
 class SendBookingReceiveNotification
 {
@@ -25,7 +25,9 @@ class SendBookingReceiveNotification
      */
     public function handle(object $event): void
     {
-        $patient = $event->booking->patient;
-        $patient->notify(new BookingReceiveNotification);
+        $booking = $event->booking;
+        $patient = $booking->patient;
+        
+        $patient->notify(new BookingReceived($booking));
     }
 }

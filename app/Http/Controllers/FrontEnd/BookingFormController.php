@@ -33,8 +33,6 @@ class BookingFormController extends Controller
             'note' => $request->note
         ]);
 
-        // event(new BookingReceive($booking));
-
         return redirect()->route('booking.healthdeclarationform', $booking);
     }
 
@@ -62,6 +60,8 @@ class BookingFormController extends Controller
             'address' => $request->address,
             'questions' => json_encode($questions),
         ]);
+
+        event(new BookingReceive($booking));
 
         return redirect()->route('booking.status', $booking);
     }

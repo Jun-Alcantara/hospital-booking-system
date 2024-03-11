@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\BackOffice;
 
+use App\Events\BookingReceive;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Clinic;
-use App\Notifications\BookingReceive;
+use App\Notifications\BookingReceived;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -49,7 +50,8 @@ class BookingController extends Controller
 
     public function sendNotification(Booking $booking)
     {
-        // return $booking->patient;
-        return $booking->patient->notify(new BookingReceive);
+        // BookingReceived
+        event(new BookingReceive($booking));
+        // return $booking->patient->notify(new BookingReceived($booking));
     }
 }
