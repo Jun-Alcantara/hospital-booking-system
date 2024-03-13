@@ -115,7 +115,7 @@
               <tr>
                 <th>Status:</th>
                 <td>
-                  Pending
+                  Approved
                 </td>
               </tr>
             </table>
