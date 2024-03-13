@@ -81,7 +81,7 @@
             <figure class="w-[250px] aspect-square">
               <img :src="`/images/logo.png`" class="w-full h-full object-cover">
             </figure>
-            <h1 class="font-bold text-[4.0rem] text-white text-center">Rosario Maclang Bautista General Hospital</h1>
+            <h1 class="font-bold text-[4.0rem] text-white text-center">HealthConnect</h1>
           </div>
         </div>
         <div class="basis-1/2 flex justify-center items-center h-screen">
@@ -143,7 +143,7 @@
                 <div class="flex gap-2">
                   <label class="form-control w-full">
                     <div class="label">
-                      <span class="label-text " :class="{'text-error': form.errors.date}">Date & Time:</span>
+                      <span class="label-text " :class="{'text-error': form.errors.date}">Date:</span>
                     </div>
 
                     <flat-pickr 

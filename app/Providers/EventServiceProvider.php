@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\BookingApproved;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 use App\Events\BookingReceive;
+use App\Listeners\SendBookingApprovedNotification;
 use App\Listeners\SendBookingReceiveNotification;
 
 class EventServiceProvider extends ServiceProvider
@@ -17,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         BookingReceive::class => [
             SendBookingReceiveNotification::class
+        ],
+        BookingApproved::class => [
+            SendBookingApprovedNotification::class
         ]
     ];
 

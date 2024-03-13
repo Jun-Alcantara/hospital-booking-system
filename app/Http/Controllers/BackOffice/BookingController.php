@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\BackOffice;
 
+use App\Events\BookingApproved;
 use App\Events\BookingReceive;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Clinic;
-use App\Notifications\BookingReceived;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -35,6 +35,8 @@ class BookingController extends Controller
         $booking->status = Booking::APPROVED;
         $booking->save();
 
+        event(new BookingApproved($booking));
+
         return back()
             ->with('notification.success', 'Booking status has been updated');
     }
@@ -51,7 +53,7 @@ class BookingController extends Controller
     public function sendNotification(Booking $booking)
     {
         // BookingReceived
-        event(new BookingReceive($booking));
+        event(new BookingApproved($booking));
         // return $booking->patient->notify(new BookingReceived($booking));
     }
 }

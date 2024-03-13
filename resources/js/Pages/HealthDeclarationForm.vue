@@ -598,7 +598,7 @@
           <div class="mt-5">
             <div class="card bg-base-200 rounded-box px-3 py-5 flex flex-col">
               <div>
-                Ikaw ba ay nasa edad na 60 na gulang at pataas at merong sakit na Diabeters, Cancer, End Stage Renal disease o nagdadialysis, sakit sa Atay o Cirrhosis, Emphysema o COPD, Autoimmune Disease?
+                Ikaw ba ay nasa edad na 60 na gulang at pataas at merong sakit na Diabetes, Cancer, End Stage Renal disease o nagdadialysis, sakit sa Atay o Cirrhosis, Emphysema o COPD, Autoimmune Disease?
               </div>
               <div class="flex flex-row gap-5 mt-3">
                 <label for="yes1" class="flex gap-1">

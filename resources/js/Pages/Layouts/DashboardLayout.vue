@@ -21,7 +21,7 @@
             Bookings
           </Link>
         </li>
-        <li>
+        <!-- <li>
           <a>
             <i class="fa fa-users"></i>
             Patients
@@ -32,7 +32,7 @@
             <i class="fa fa-file-pdf"></i>
             Reports
           </a>
-        </li>
+        </li> -->
         <li>
           <Link href="/console/settings">
             <i class="fa fa-cogs"></i>
@@ -46,7 +46,7 @@
               My Account
             </summary>
             <ul class="p-2 bg-base-100 rounded-t-none">
-              <li><a>Update Details</a></li>
+              <!-- <li><a>Update Details</a></li> -->
               <li>
                 <form @submit.prevent="logout">
                   <button type="submit">Logout</button>

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Booking;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,9 +18,11 @@ class BookingApproved
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(
+        public Booking $booking
+    )
     {
-        //
+        
     }
 
     /**
