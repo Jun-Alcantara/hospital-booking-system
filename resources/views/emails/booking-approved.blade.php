@@ -80,7 +80,7 @@
           <img class="w-full h-full object-cover" src="http://rmb-gh.site/images/logo.png" alt="Rosario Macapagal Bautista General Hospital">
         </td>
         <td>
-          <h1 class="title">You appointment at Rosario Macapagal Bautista General Hospital is confirmed!</h1>
+          <h1 class="title">You appointment at Rosario Maclang Bautista General Hospital is confirmed!</h1>
         </td>
       </tr>
       <tr>
@@ -88,7 +88,7 @@
           <div>
             <p class="mb-3 ">Hi {{ $notifiable->firstname }} {{ $notifiable->lastname }}!</p>
             <p class="mb-3">
-              Rosario Macapagal Bautista General Hospital has <strong>CONFIRMED</strong> you booking request. Please don't be a no show, the hospital reserved that spot for you.
+              Rosario Maclang Bautista General Hospital has <strong>CONFIRMED</strong> you booking request. Please don't be a no show, the hospital reserved that spot for you.
             </p>
             <p class="mb-3">
               You may see your booking request details below:

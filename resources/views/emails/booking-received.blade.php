@@ -77,10 +77,10 @@
     <table id="main-container-table">
       <tr>
         <td class="logo-container">
-          <img class="w-full h-full object-cover" src="http://rmb-gh.site/images/logo.png" alt="Rosario Macapagal Bautista General Hospital">
+          <img class="w-full h-full object-cover" src="http://rmb-gh.site/images/logo.png" alt="Rosario Maclang Bautista General Hospital">
         </td>
         <td>
-          <h1 class="title">You booking request has been sent to Rosario Macapagal Bautista General Hospital</h1>
+          <h1 class="title">You booking request has been sent to Rosario Maclang Bautista General Hospital</h1>
         </td>
       </tr>
       <tr>
