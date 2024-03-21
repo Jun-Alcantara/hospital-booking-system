@@ -52,13 +52,18 @@
       })
   }
 
+  const patientPendingBooking = ref(null)
+
   const handleEmailType = debounce( async (e) => {
     let email = e.target.value
     
     axios.get(`/api/patients?email=${email}`)
       .then((response) => {
         if (response.status === 200 && response.data) {
-          let patient = response.data
+          let patient = response.data.patient
+          let pendingBooking = response.data.pendingBooking
+
+          patientPendingBooking.value = pendingBooking
 
           form.firstname = patient.firstname
           form.middlename = patient.middlename
@@ -88,6 +93,12 @@
 
           <div class="card w-full bg-base-100 shadow-xl">
             <div class="card-body">
+
+              <div  v-if="patientPendingBooking" class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i>
+                <span>You still have pending bookings. Click <a :href="`/booking/status/${patientPendingBooking.reference_number}`" class="underline">here</a> to view details.</span>
+              </div>
+
               <form @submit.prevent="submit">
 
                 <label class="form-control w-full">
@@ -182,7 +193,7 @@
 
                 <label class="form-control">
                   <div class="label">
-                    <span class="label-text">Purpose Of Visit:</span>
+                    <span class="label-text">Purpose of visit:</span>
                   </div>
                   
                   <textarea 
@@ -193,7 +204,7 @@
 
                 </label>
 
-                <button class="btn btn-primary mt-3">Make a Booking</button>
+                <button :disabled="patientPendingBooking" class="btn btn-primary mt-3">Make a Booking</button>
               </form>
             </div>
           </div>

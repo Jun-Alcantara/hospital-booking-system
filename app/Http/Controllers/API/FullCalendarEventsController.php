@@ -11,6 +11,11 @@ class FullCalendarEventsController extends Controller
 {
     public function events()
     {
+        
+    }
+
+    public function eventsx()
+    {
         $blockedDates = BookingBlockedDates::get();
 
         $bookings = Booking::selectRaw("count(*) as booking_count, DATE_FORMAT(booking_date, '%Y-%m-%d') as date")

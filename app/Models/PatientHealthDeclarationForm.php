@@ -9,5 +9,5 @@ class PatientHealthDeclarationForm extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['booking_id', 'firstname', 'middlename', 'lastname', 'gender', 'dob', 'age', 'contact_number', 'occupation', 'address', 'questions'];
+    protected $fillable = ['booking_id', 'firstname', 'middlename', 'lastname', 'gender', 'dob', 'age', 'contact_number', 'occupation', 'address', 'unit_number', 'barangay', 'municipality', 'province', 'country', 'zip_code', 'questions'];
 }

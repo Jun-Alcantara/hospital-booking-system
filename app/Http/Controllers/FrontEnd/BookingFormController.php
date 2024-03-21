@@ -47,6 +47,8 @@ class BookingFormController extends Controller
     {
         $questions = $request->answers;
 
+        $address = "$request->unit_number $request->barangay $request->municipality $request->province $request->country $request->zip_code";
+
         PatientHealthDeclarationForm::create([
             'booking_id' => $booking->id,
             'firstname' => $request->firstname,
@@ -57,11 +59,19 @@ class BookingFormController extends Controller
             'age' => intval($request->age),
             'contact_number' => $request->contact_number,
             'occupation' => $request->occupation,
-            'address' => $request->address,
+            'address' => $address,
+            'unit_number' => $request->unit_number,
+            'barangay' => $request->barangay,
+            'municipality' => $request->municipality,
+            'province' => $request->province,
+            'country' => $request->country,
+            'zip_code' => $request->zip_code,
             'questions' => json_encode($questions),
         ]);
 
         event(new BookingReceive($booking));
+
+        return "Done";
 
         return redirect()->route('booking.status', $booking);
     }

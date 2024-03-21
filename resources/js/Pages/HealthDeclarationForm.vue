@@ -19,7 +19,12 @@
     age: null,
     contact_number: null,
     occupation: null, 
-    address: null,
+    unit_number: null,
+    barangay: null,
+    municipality: null,
+    province: null,
+    country: null,
+    zip_code: null,
     answers: {
       q1: null,
       q2: null,
@@ -47,8 +52,11 @@
       q9: null,
       q10: null,
       q11: null
-    }
+    },
+    terms_agreed: false
   })
+
+  const showTermsAndConditionError = ref(false)
 
   const flatpickrConfig = ref({
     maxDate: dayjs().format('YYYY-MM-DD')
@@ -66,6 +74,12 @@
   }
 
   const submit = () => {
+    showTermsAndConditionError.value = false
+    if (! form.terms_agreed) {
+      showTermsAndConditionError.value = true
+      return
+    }
+
     form.post(`/booking/${props.booking.reference_number}/health-declaration-form`, {
       onSuccess: (repsonse) => console.log(response)
     })
@@ -134,7 +148,7 @@
           </div>
 
           <div class="flex gap-3">
-            <div class="basis-1/4">
+            <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
                   <span class="label-text">Gender (Kasarian):</span>
@@ -148,7 +162,7 @@
                 </select>
               </label>
             </div>
-            <div class="basis-1/4">
+            <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
                   <span class="label-text">Date of Birth (Kaarawan):</span>
@@ -162,7 +176,7 @@
                 />
               </label>
             </div>
-            <div class="basis-1/4">
+            <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
                   <span class="label-text">Age (Edad):</span>
@@ -176,7 +190,10 @@
                 />
               </label>
             </div>
-            <div class="basis-1/4">
+          </div>
+
+          <div class="flex gap-3">
+            <div class="basis-1/2">
               <label class="form-control w-full">
                 <div class="label">
                   <span class="label-text">Contact Number (Telepono):</span>
@@ -189,10 +206,7 @@
                 />
               </label>
             </div>
-          </div>
-
-          <div class="flex gap-3">
-            <div class="basis-1/4">
+            <div class="basis-1/2">
               <label class="form-control w-full">
                 <div class="label">
                   <span class="label-text">Occupation (Trabaho):</span>
@@ -205,14 +219,89 @@
                 />
               </label>
             </div>
-            <div class="basis-3/4">
+          </div>
+
+          <div class="mt-5">
+            <h3>HOME ADDRESS</h3>
+          </div>
+
+          <div class="flex gap-3">
+            <div class="basis-1/2">
               <label class="form-control w-full">
                 <div class="label">
-                  <span class="label-text">Address:</span>
+                  <span class="label-text">Unit No. Building / No. Block Street:</span>
                 </div>
 
                 <input 
-                  v-model="form.address"
+                  v-model="form.unit_number"
+                  type="text" 
+                  class="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            <div class="basis-1/2">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text">Subdivision / Village / Barangay:</span>
+                </div>
+
+                <input 
+                  v-model="form.barangay"
+                  type="text" 
+                  class="input input-bordered w-full"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <div class="basis-4/12">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text">City / Municipality:</span>
+                </div>
+
+                <input 
+                  v-model="form.municipality"
+                  type="text" 
+                  class="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            <div class="basis-4/12">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text">Province / State:</span>
+                </div>
+
+                <input 
+                  v-model="form.province"
+                  type="text" 
+                  class="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            <div class="basis-3/12">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text">Country:</span>
+                </div>
+
+                <input 
+                  v-model="form.country"
+                  type="text" 
+                  class="input input-bordered w-full"
+                />
+              </label>
+            </div>
+            <div class="basis-1/12">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text">Zip Code:</span>
+                </div>
+
+                <input 
+                  v-model="form.zip_code"
                   type="text" 
                   class="input input-bordered w-full"
                 />
@@ -650,7 +739,7 @@
 
           <div class="mt-5 flex">
             <div class="flex justify-center items-start pr-3 pt-3">
-              <input type="checkbox" class="checkbox">
+              <input v-model="form.terms_agreed" type="checkbox" class="checkbox">
             </div>
             <div>
               <p class="italic">
@@ -663,10 +752,15 @@
           </div>
 
           <div class="mt-5 flex justify-end">
-            <button @click="submit" class="btn btn-primary">
-              <i class="fa fa-paper-plane"></i>
-              Submit Form
-            </button>
+            <div class="flex gap-5 items-center">
+              <span v-if="showTermsAndConditionError" class="text-error">
+                Please ensure you've checked the box to accept the terms and conditions before continuing.
+              </span>
+              <button @click="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i>
+                Submit Form
+              </button>
+            </div>
           </div>
 
         </div>

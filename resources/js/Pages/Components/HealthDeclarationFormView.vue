@@ -82,10 +82,37 @@
       </td>
     </tr>
     <tr>
-      <td colspan="4">
-        <span class="font-bold">ADDRESS</span>
+      <td colspan="2">
+        <span class="font-bold">Unit No. Building / No. Block Street</span>
         <br>
-        {{ form.address }}
+        {{ form.unit_number }}
+      </td>
+      <td colspan="2">
+        <span class="font-bold">Subdivision / Village / Barangay</span>
+        <br>
+        {{ form.barangay }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="font-bold">City / Municipality</span>
+        <br>
+        {{ form.municipality }}
+      </td>
+      <td>
+        <span class="font-bold">Province / State</span>
+        <br>
+        {{ form.province }}
+      </td>
+      <td>
+        <span class="font-bold">Country</span>
+        <br>
+        {{ form.country }}
+      </td>
+      <td>
+        <span class="font-bold">Zip Code</span>
+        <br>
+        {{ form.zip_code }}
       </td>
     </tr>
   </table>

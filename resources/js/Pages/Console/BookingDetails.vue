@@ -91,6 +91,10 @@ import axios from 'axios';
             <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY HH:mm A') }}</td>
           </tr>
           <tr>
+            <th>Booking Date</th>
+            <td>{{ dayjs(booking.created_at).format('MMMM DD, YYYY HH:mm A') }}</td>
+          </tr>
+          <tr>
             <th>Patient's Email</th>
             <td>{{ patient.email }}</td>
           </tr>
