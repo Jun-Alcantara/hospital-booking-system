@@ -23,6 +23,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Booked Date</th>
+          <th>Booking Date</th>
           <th>Status</th>
           <th class="flex gap-3 justify-end">
           </th>
@@ -34,6 +35,7 @@
           <td>{{ booking.patient?.firstname }} {{ booking.patient?.lastname }}</td>
           <td>{{ booking.patient?.email }}</td>
           <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY hh:mm A') }}</td>
+          <td>{{ dayjs(booking.created_at).format('MMMM DD, YYYY hh:mm A') }}</td>
           <td>{{ booking.status_name }}</td>
           <th class="flex gap-3 justify-end">
             <Link :href="`/console/booking/${booking.reference_number}`" class="btn btn-xs btn-primary">View Details</Link>

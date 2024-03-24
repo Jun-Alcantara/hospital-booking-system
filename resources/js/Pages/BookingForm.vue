@@ -191,6 +191,28 @@
                   </label>
                 </div>
 
+                <hr class="my-3">
+
+                <div class="form-control my-3 flex flex-row">
+                  <div class="basis-1/2">
+                    <label>Are you a Philhealth member?</label>
+                    <div class="flex gap-7 mt-2">
+                      <div class="flex items-center"><input type="radio" name="radio-2" class="radio radio-primary" checked /> &nbsp; Yes </div>
+                      <div class="flex items-center"><input type="radio" name="radio-2" class="radio radio-primary" /> &nbsp; No</div>
+                    </div>
+                  </div>
+                  <div class="basis-1/2 flex flex-col gap-3 justify-center">
+                    <div class="flex items-center">
+                      <input type="checkbox" checked="checked" class="checkbox" /> &nbsp; I'm a PWD (Person With Disabilities)
+                    </div>
+                    <div class="flex items-center">
+                      <input type="checkbox" checked="checked" class="checkbox" /> &nbsp; I'm a senior citizen
+                    </div>
+                  </div>
+                </div>
+
+                <hr class="my-3">
+
                 <label class="form-control">
                   <div class="label">
                     <span class="label-text">Purpose of visit:</span>
@@ -199,10 +221,14 @@
                   <textarea 
                     v-model="form.note"  
                     class="textarea textarea-bordered h-24"
-                    placeholder="My symptoms are ..."
+                    placeholder="Symptoms/Previous check up result/Name of Doctor"
                   ></textarea>
 
                 </label>
+
+                <span class="italic text-gray-500">
+                  The patient needs to arrife one hour before their scheduled appointment
+                </span>
 
                 <button :disabled="patientPendingBooking" class="btn btn-primary mt-3">Make a Booking</button>
               </form>
