@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\BackOffice;
 
 use App\Events\BookingApproved;
-use App\Events\BookingReceive;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Clinic;
 use Illuminate\Http\Request;
+use App\Models\BookingSettings;
+use App\Models\BookingBlockedDates;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -48,6 +50,46 @@ class BookingController extends Controller
 
         return back()
             ->with('notification.success', 'Booking status has been updated');
+    }
+
+    public function rescheduleForm(Booking $booking)
+    {
+        $patient = $booking->patient;
+        $settings = BookingSettings::find(1);
+
+        $fullyBookSlots = Booking::selectRaw('DATE_FORMAT(booking_date, "%Y-%m-%d") as date')
+            ->selectRaw('COUNT(*) as booking_count')
+            ->groupBy(DB::raw('DATE_FORMAT(booking_date, "%Y-%m-%d")'))
+            ->havingRaw('COUNT(*) >= ?', [$settings->max_booking_per_day ?? 250])
+            ->get()
+            ->pluck('date');
+
+        $blockDates = BookingBlockedDates::get(['date']);
+
+        $disabledDates = $fullyBookSlots->merge($blockDates->pluck('date'));
+
+        $clinics = Clinic::all();
+
+        return inertia('Console/BookingRescheduleForm', compact('booking', 'patient', 'disabledDates', 'clinics'));
+    }
+
+    public function reschedule(Request $request, Booking $booking)
+    {
+        $validated = $request->validate([
+            'clinic' => 'required',
+            'department' => 'required',
+            'newDate' => 'required',
+        ]);
+
+        $booking->clinic_id = $validated['clinic'];
+        $booking->clinic_department_id = $validated['department'];
+        $booking->status = Booking::APPROVED;
+        $booking->save();
+
+        event(new BookingApproved($booking));
+
+        return redirect("/console/booking/$booking->reference_number")
+            ->with('notification.success', 'Booking has been approved');
     }
 
     public function sendNotification(Booking $booking)

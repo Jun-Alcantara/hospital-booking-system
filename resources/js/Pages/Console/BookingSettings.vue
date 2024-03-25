@@ -14,6 +14,7 @@
     maxBookingPerDay: props.settings?.max_booking_per_day,
     visitStart: props.settings?.visit_start,
     visitEnd: props.settings?.visit_end,
+    opdSchedule: null,
     blockDates: null
   })
 
@@ -26,7 +27,7 @@
   const showAlert = ref(false)
 
   const submit = () => {
-    form.patch('/console/settings', {
+    form.post('/console/settings', {
       onSuccess: () => {
         showAlert.value = usePage().props.flash_notifications.success
       }
@@ -78,6 +79,10 @@
 
   const updateStartMin = (e) => {
     endTimeslotStart.value = e.target.value
+  }
+
+  const handleOpdScheduleFilePick = (e) => {
+    form.opdSchedule = e.target.files[0]
   }
 </script>
 
@@ -155,6 +160,17 @@
               </option>
             </select>
             <div class="text-error" v-if="form.errors.visitEnd">{{ form.errors.visitEnd }}</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <div class="w-1/3">
+          <div class="label">
+              <span class="label-text" :class="{'text-error': form.errors.visopdScheduleitEnd}">Upload OPD Schedule:</span>
+            </div>
+          <label class="form-control w-full">
+            <input @change="handleOpdScheduleFilePick" type="file" class="file-input file-input-bordered w-full" accept="image/png, image/jpeg" />
           </label>
         </div>
       </div>

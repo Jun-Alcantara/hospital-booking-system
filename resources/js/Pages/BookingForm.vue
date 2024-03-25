@@ -9,10 +9,11 @@
   import 'flatpickr/dist/flatpickr.css'
 
   const props = defineProps({
-    disabledDates: Array
+    disabledDates: Array,
+    settings: Object
   })
 
-  console.log(Object.values(props.disabledDates))
+  const showOpdSchedule = ref(false)
 
   const config = ref({
     wrap: true, // set wrap to true only when using 'input-group'
@@ -30,6 +31,9 @@
     middlename: null,
     lastname: null,
     date: null,
+    philhealthMember: false,
+    pwd: false,
+    senior: false,
     time: '',
     note: ''
   })
@@ -197,21 +201,25 @@
                   <div class="basis-1/2">
                     <label>Are you a Philhealth member?</label>
                     <div class="flex gap-7 mt-2">
-                      <div class="flex items-center"><input type="radio" name="radio-2" class="radio radio-primary" checked /> &nbsp; Yes </div>
-                      <div class="flex items-center"><input type="radio" name="radio-2" class="radio radio-primary" /> &nbsp; No</div>
+                      <div class="flex items-center">
+                        <input type="radio" name="radio-2" class="radio radio-primary" value="true" v-model="form.philhealthMember" /> &nbsp; Yes
+                      </div>
+                      <div class="flex items-center">
+                        <input type="radio" name="radio-2" class="radio radio-primary" value="false" v-model="form.philhealthMember" /> &nbsp; No
+                      </div>
                     </div>
                   </div>
                   <div class="basis-1/2 flex flex-col gap-3 justify-center">
                     <div class="flex items-center">
-                      <input type="checkbox" checked="checked" class="checkbox" /> &nbsp; I'm a PWD (Person With Disabilities)
+                      <input type="checkbox" v-model="form.pwd" class="checkbox" /> &nbsp; I'm a PWD (Person With Disabilities)
                     </div>
                     <div class="flex items-center">
-                      <input type="checkbox" checked="checked" class="checkbox" /> &nbsp; I'm a senior citizen
+                      <input type="checkbox" v-model="form.senior" class="checkbox" /> &nbsp; I'm a senior citizen
                     </div>
                   </div>
                 </div>
 
-                <hr class="my-3">
+                <hr class="mt-3 mb-1">
 
                 <label class="form-control">
                   <div class="label">
@@ -230,12 +238,36 @@
                   The patient needs to arrife one hour before their scheduled appointment
                 </span>
 
-                <button :disabled="patientPendingBooking" class="btn btn-primary mt-3">Make a Booking</button>
+                <div class="flex gap-3">
+                  <button :disabled="patientPendingBooking" class="btn btn-primary mt-3">Make a Booking</button>
+                  <button 
+                    v-if="settings.opd_schedule_img"
+                    class="btn btn-primary mt-3"
+                    @click.prevent="showOpdSchedule = true"
+                  >View OPD Schedule</button>
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <dialog class="modal" :class="{'modal-open': showOpdSchedule}">
+      <div class="modal-box w-11/12 max-w-5xl">
+        <div class="mb-3 flex justify-between items-center">
+          <h1 class="text-xl font-semibold">
+            OPD Schedule as of {{ dayjs().format("MMMM DD, YYYY") }}
+          </h1>
+          <button class="btn bg-green-800 text-white" @click="showOpdSchedule = false">
+            <i class="fa fa-times"></i>
+            Close
+          </button>
+        </div>
+        <figure>
+          <img :src="`/storage/${settings.opd_schedule_img}`" class="w-full h-full object-cover">
+        </figure>
+      </div>
+    </dialog>
   </section>
 </template>

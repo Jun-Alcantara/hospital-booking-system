@@ -42,13 +42,16 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     Route::delete('logout', [LoginController::class, 'logout'])->name('console.logout');
     Route::get('dashboard', [BookingDashboardController::class, 'index'])->name('console.dashboard');
     Route::get('settings', [BookingSettingsController::class,'showSettings'])->name('booking.settings');
-    Route::patch('settings', [BookingSettingsController::class, 'updateSettings'])->name('booking.settings.update');
+    Route::post('settings', [BookingSettingsController::class, 'updateSettings'])->name('booking.settings.update');
 
     Route::get('booking-calendar', [BookingCalendarController::class, 'index'])->name('booking.calendar.index');
 
     Route::get('booking/{booking}', [BookingController::class, 'show']);
     Route::patch('booking/{booking}/approve', [BookingController::class, 'approve']);
     Route::patch('booking/{booking}/cancel', [BookingController::class, 'cancel']);
+    
+    Route::get('booking/{booking}/reschedule', [BookingController::class, 'rescheduleForm']);
+    Route::post('booking/{booking}/reschedule', [BookingController::class, 'reschedule']);
 
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 

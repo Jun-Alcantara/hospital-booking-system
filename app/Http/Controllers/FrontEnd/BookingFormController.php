@@ -23,6 +23,9 @@ class BookingFormController extends Controller
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'lastname' => $request->lastname,
+            'philhealth_member' => $request->philhealthMember == "true" ? 1 : 0,
+            'pwd' => $request->pwd,
+            'senior' => $request->senior
         ]);
 
         $booking = Booking::create([

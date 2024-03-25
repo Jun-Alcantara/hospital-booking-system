@@ -20,7 +20,7 @@ class ClinicSeeder extends Seeder
                 'Cardiology',
                 'Neurology',
                 'Nephrology',
-                'Diabetes',
+                'Diabetology',
                 'Dermatology'
             ],
             'Pediatrics' => [
@@ -35,9 +35,10 @@ class ClinicSeeder extends Seeder
             'Surgery' => [
                 'ENT',
                 'Orthopedic',
-                'Neorology',
+                'Urology',
                 'Elective Minor Procedure',
-                'Elective Major Procedure'
+                'Elective Major Procedure',
+                'Reconstructive Surgery'
             ],
             'OB-Gyne' => [
                 'Prenatal Check-up'
@@ -45,9 +46,14 @@ class ClinicSeeder extends Seeder
             'Dental' => [], 
             'Specialty Clinic' => [
                 'Heart Station',
-                'Ultrasound'
+                'Ultrasound',
+                'Parex'
             ]
         ];
+
+
+        Clinic::truncate();
+        ClinicDepartment::truncate();
 
         foreach ($clinics as $clinic => $departments) {
             $c = Clinic::create([

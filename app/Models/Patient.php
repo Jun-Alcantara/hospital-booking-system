@@ -12,6 +12,6 @@ class Patient extends Model
     use Notifiable;
 
     protected $fillable = [
-        'email', 'firstname', 'middlename', 'lastname'
+        'email', 'firstname', 'middlename', 'lastname', 'philhealth_member', 'pwd', 'senior'
     ];
 }

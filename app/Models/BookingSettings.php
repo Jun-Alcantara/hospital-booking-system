@@ -9,7 +9,7 @@ class BookingSettings extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['max_booking_per_day', 'visit_start', 'visit_end'];
+    protected $fillable = ['max_booking_per_day', 'visit_start', 'visit_end', 'opd_schedule_img'];
 
     protected $casts = [
         'visit_start' => 'integer',

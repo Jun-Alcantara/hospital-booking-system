@@ -2,7 +2,10 @@
   import dayjs from 'dayjs'
   import { ref } from 'vue'
   import { router, Link, useForm } from '@inertiajs/vue3'
-  import HealthDeclarationFormView from '../Components/HealthDeclarationFormView.vue';
+  import HealthDeclarationFormView from '../Components/HealthDeclarationFormView.vue'
+
+  import flatPickr from 'vue-flatpickr-component'
+  import 'flatpickr/dist/flatpickr.css'
 
   const props = defineProps({
     booking: Object,
@@ -54,15 +57,17 @@ import axios from 'axios';
 <template>
   <div class="max-w-screen-xl mx-auto pt-5">
 
-    <div class="flex justify-between">
+    <div class="flex justify-between mb-3">
       <div>
-        <Link href="/console/dashboard">View all bookings</Link>
+        <Link href="/console/dashboard" class="btn">
+          <i class="fa fa-arrow-left"></i>
+          View all bookings</Link>
       </div>
       <div class="flex justify-end gap-2">
         <a v-if="booking.status == 0" onclick="approve_confirmation_modal.showModal()" class="btn btn-primary">
           Approve
         </a>
-        <a href="#" class="btn btn-neutral">
+        <a v-if="booking.status != 1 && booking.status != 3" href="#" onclick="reschedule_booking.showModal()" class="btn btn-neutral">
           Reschedule
         </a>
         <a v-if="booking.status == 0" onclick="cancel_confirmation_modal.showModal()" href="#" class="btn btn-warning">
@@ -161,6 +166,22 @@ import axios from 'axios';
     <dialog id="cancel_confirmation_modal" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Are you sure you want to cancel {{ patient.firstname }}'s appointment?</h3>
+        <div class="flex justify-center gap-2 mt-5">
+          <button @click="cancel" class="btn btn-primary">Cancel</button>
+          <form method="dialog">
+            <button onclick="approve" class="btn btn-neutral">Close</button>
+          </form>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <dialog id="reschedule_booking" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Reschedule {{ patient.firstname }}'s appointment</h3>
+        <flat-pickr />
         <div class="flex justify-center gap-2 mt-5">
           <button @click="cancel" class="btn btn-primary">Cancel</button>
           <form method="dialog">

@@ -13,8 +13,6 @@ class BookingFormControllerX extends Controller
     {
         $settings = BookingSettings::find(1);
 
-        // return $settings->max_booking_per_day;
-
         $fullyBookSlots = Booking::selectRaw('DATE_FORMAT(booking_date, "%Y-%m-%d") as date')
             ->selectRaw('COUNT(*) as booking_count')
             ->groupBy(DB::raw('DATE_FORMAT(booking_date, "%Y-%m-%d")'))
@@ -26,6 +24,6 @@ class BookingFormControllerX extends Controller
 
         $disabledDates = $fullyBookSlots->merge($blockDates->pluck('date'));
 
-        return inertia('BookingForm', compact('disabledDates'));
+        return inertia('BookingForm', compact('disabledDates', 'settings'));
     }
 }
