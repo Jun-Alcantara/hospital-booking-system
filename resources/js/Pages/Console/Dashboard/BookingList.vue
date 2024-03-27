@@ -1,16 +1,29 @@
 <script setup>
   import { Link } from '@inertiajs/vue3'
+  import { ref } from 'vue'
   import dayjs from 'dayjs'
+  import axios from 'axios'
   
   const props = defineProps({
     bookings: Object
   })
+
+  const bookings = ref(props.bookings)
+
+  const search = ref('')
+
+  const handleSearch = () => {
+    axios.get(`/api/search/booking?q=${search.value}`)
+      .then((response) => {
+        bookings.value = response.data
+      })
+  }
 </script>
 
 <template>
   <div class="py-5 flex justify-end">
     <label class="form-control w-full max-w-xs">
-      <input type="text" placeholder="Search" class="input input-bordered w-full max-w-xs" />
+      <input v-model="search" @keyup="handleSearch" type="text" placeholder="Search" class="input input-bordered w-full max-w-xs" />
     </label>
   </div>
 

@@ -67,4 +67,5 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
 
 Route::prefix('api')->group(function () {
     Route::get('patients', [PatientController::class, 'searchEmail']);
+    Route::get('search/booking', [BookingsController::class, 'searchBooking']);
 });
