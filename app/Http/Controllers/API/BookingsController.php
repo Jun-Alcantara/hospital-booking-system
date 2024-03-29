@@ -36,4 +36,14 @@ class BookingsController extends Controller
         return back()
             ->with('notification.success', 'Date has been blocked');
     }
+
+    public function searchBooking(Request $request)
+    {
+        $searchKey = "%$request->q%";
+
+        return Booking::with('patient')
+            ->whereHas('patient', function ($q) use ($searchKey) {
+                $q->whereRaw("(email LIKE ?)", [$searchKey]);
+            })->get();
+    }
 }

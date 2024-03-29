@@ -67,7 +67,7 @@ import axios from 'axios';
         <a v-if="booking.status == 0" onclick="approve_confirmation_modal.showModal()" class="btn btn-primary">
           Approve
         </a>
-        <Link v-if="booking.status != 1 && booking.status != 3" :href="`/console/booking/${booking.reference_number}/reschedule`" onclick="reschedule_booking.showModal()" class="btn btn-neutral">
+        <Link v-if="booking.status != 1 && booking.status != 3" :href="`/console/booking/${booking.reference_number}/reschedule`" class="btn btn-neutral">
           Reschedule
         </Link>
         <a v-if="booking.status == 0" onclick="cancel_confirmation_modal.showModal()" href="#" class="btn btn-warning">

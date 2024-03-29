@@ -54,22 +54,18 @@
 
 <template>
   <div class="max-w-screen-xl mx-auto">
-    <div class="flex flex-col gap-3">
-      <Link :href="`/console/booking/${booking.reference_number}`">
-        <h1 class="text-xl">
-          <i class="fa fa-arrow-left"></i> Booking Details
-        </h1>
-      </Link>
-      <h1 class="text-2xl">Reschedule Form</h1>
-    </div>
+    <Link :href="`/console/booking/${booking.reference_number}`">
+      <i class="fa fa-arrow-left"></i> Booking Details
+    </Link>
+    <h1 class="text-2xl">Reschedule Form</h1>
     <div class="flex mt-3 gap-5">
       <div class="basis-1/2">
-        <div class="card w-full bg-base-100 shadow-xl">
+        <div class="card w-full bg-base-100 shadow-xl border-[1px]">
           <div class="card-body">
             <h1 class="text-xl">
               Original Booking
             </h1>
-            <table class="mt-3">
+            <table id="details" class="mt-3">
               <tr>
                 <th class="text-left">Status</th>
                 <td>{{ booking.status_name }}</td>
@@ -107,7 +103,7 @@
         </div>
       </div>
       <div class="basis-1/2">
-        <div class="card w-full bg-base-100 shadow-xl">
+        <div class="card w-full bg-base-100 shadow-xl border-[1px]">
           <div class="card-body">
             <h1 class="text-xl">
               New Booking Schedule
@@ -176,3 +172,12 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  table#details th, 
+  table#details td {
+    border-top: 1px solid lightgray;
+    /* border-bottom: 1px solid lightgray; */
+    padding: 10px 0px;
+  }
+</style>
