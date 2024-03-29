@@ -10,7 +10,7 @@
     pendingBookings: Number
   })
 
-  const activeTab = ref(1)
+  const activeTab = ref(2)
   
   const handleTabClick = (tabIndex) => {
     activeTab.value = tabIndex
@@ -41,11 +41,11 @@
 
     <div class="flex justify-center">
       <div role="tablist" class="tabs tabs-boxed">
-        <a @click="handleTabClick(1)" role="tab" class="tab" :class="{'tab-active': activeTab == 1}">
-          <i class="fa fa-calendar"></i> &nbsp; Booking Calendar
-        </a>
         <a @click="handleTabClick(2)" role="tab" class="tab" :class="{'tab-active': activeTab == 2}">
           <i class="fa fa-file"></i> &nbsp; Booking List
+        </a>
+        <a @click="handleTabClick(1)" role="tab" class="tab" :class="{'tab-active': activeTab == 1}">
+          <i class="fa fa-calendar"></i> &nbsp; Booking Calendar
         </a>
       </div>
     </div>

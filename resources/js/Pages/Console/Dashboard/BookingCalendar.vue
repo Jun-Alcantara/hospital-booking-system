@@ -27,9 +27,11 @@
   onMounted(() => {
     axios.get(`/console/api/full-calendar/events`)
       .then((response) => {
+        console.log(response)
         events.value = response.data
       })
-
+    
+    console.log('Events fetched')
     console.log(events)
   })
 
@@ -43,7 +45,6 @@
 
   watchEffect(() => {
     calendarOptions.value.events = events
-    console.log(events.value)
   })
 </script>
 

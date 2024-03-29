@@ -8,6 +8,7 @@ use App\Http\Controllers\BackOffice\BookingCalendarController;
 use App\Http\Controllers\BackOffice\BookingController;
 use App\Http\Controllers\BackOffice\BookingSettingsController;
 use App\Http\Controllers\BackOffice\ClinicController;
+use App\Http\Controllers\BackOffice\ReportsController;
 use App\Http\Controllers\BookingFormControllerX;
 use App\Http\Controllers\FrontEnd\BookingFormController;
 use App\Http\Controllers\BookingDashboardController;
@@ -52,6 +53,9 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     
     Route::get('booking/{booking}/reschedule', [BookingController::class, 'rescheduleForm']);
     Route::post('booking/{booking}/reschedule', [BookingController::class, 'reschedule']);
+
+    Route::get('reports', [ReportsController::class, 'reports']);
+    Route::get('reports/server-side/patient-database', [ReportsController::class, 'downloadPatientDatabase']);
 
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 

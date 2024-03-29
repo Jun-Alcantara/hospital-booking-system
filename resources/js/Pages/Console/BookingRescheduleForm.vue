@@ -9,7 +9,7 @@
 <script setup>
   import dayjs from 'dayjs'
   import axios from 'axios'
-  import { useForm } from '@inertiajs/vue3'
+  import { useForm, Link } from '@inertiajs/vue3'
   import { ref } from 'vue'
   import flatPickr from 'vue-flatpickr-component'
   import 'flatpickr/dist/flatpickr.css'
@@ -54,7 +54,14 @@
 
 <template>
   <div class="max-w-screen-xl mx-auto">
-    <h1 class="text-2xl">Reschedule Form</h1>
+    <div class="flex flex-col gap-3">
+      <Link :href="`/console/booking/${booking.reference_number}`">
+        <h1 class="text-xl">
+          <i class="fa fa-arrow-left"></i> Booking Details
+        </h1>
+      </Link>
+      <h1 class="text-2xl">Reschedule Form</h1>
+    </div>
     <div class="flex mt-3 gap-5">
       <div class="basis-1/2">
         <div class="card w-full bg-base-100 shadow-xl">

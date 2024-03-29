@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Booking extends Model
@@ -55,6 +56,9 @@ class Booking extends Model
             case 3:
                 return 'CANCELED';
                 break;
+            case 4: 
+                return 'FOR RESCHEDULING';
+                break;
             default:
                 return 'COMPLETED';
                 break;
@@ -66,9 +70,9 @@ class Booking extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function healthDeclarationForm(): HasOne
+    public function healthDeclarationForm()
     {
-        return $this->hasONe(PatientHealthDeclarationForm::class);
+        return $this->hasMany(PatientHealthDeclarationForm::class);
     }
 
     public function clinic(): BelongsTo

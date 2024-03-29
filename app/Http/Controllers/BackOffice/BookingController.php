@@ -9,6 +9,7 @@ use App\Models\Clinic;
 use Illuminate\Http\Request;
 use App\Models\BookingSettings;
 use App\Models\BookingBlockedDates;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -83,6 +84,7 @@ class BookingController extends Controller
 
         $booking->clinic_id = $validated['clinic'];
         $booking->clinic_department_id = $validated['department'];
+        $booking->booking_date = Carbon::parse($validated['newDate'])->format('Y-m-d');
         $booking->status = Booking::APPROVED;
         $booking->save();
 
