@@ -18,7 +18,7 @@ class BookingController extends Controller
     {
         $patient = $booking->patient;
         $booking->status_name = $booking->status_name;
-        $healthDeclarationForm = $booking->healthDeclarationForm;
+        $healthDeclarationForm = $booking->healthDeclarationForm->sortByDesc('id')->first();
 
         if ($healthDeclarationForm) {
             $healthDeclarationForm->questions = json_decode($healthDeclarationForm->questions);
