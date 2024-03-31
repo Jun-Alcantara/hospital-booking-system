@@ -109,7 +109,7 @@
             <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
-                  <span class="label-text">Firstname:</span>
+                  <span class="label-text">First Name:</span>
                 </div>
 
                 <input 
@@ -122,7 +122,7 @@
             <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
-                  <span class="label-text">Middlename:</span>
+                  <span class="label-text">Middle Name:</span>
                 </div>
 
                 <input 
@@ -135,7 +135,7 @@
             <div class="basis-1/3">
               <label class="form-control w-full">
                 <div class="label">
-                  <span class="label-text">Lastname:</span>
+                  <span class="label-text">Last Name:</span>
                 </div>
 
                 <input 

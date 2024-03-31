@@ -47,7 +47,7 @@ class ClinicSeeder extends Seeder
             'Specialty Clinic' => [
                 'Heart Station',
                 'Ultrasound',
-                'Parex'
+                'Pares'
             ]
         ];
 

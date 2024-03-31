@@ -26,7 +26,7 @@
                 <!-- <WaitingSvg class="h-[100px]" /> -->
               </div>
               <div class="grow">
-                <h2 class="card-title font-bold mb-3">Appoinment Booking Received! 🥳</h2>
+                <h2 class="card-title font-bold mb-3">Appoinment Booking Received!</h2>
                 <p class="mb-3">Hi {{ patient.firstname }} {{ patient.lastname }}! Your booking request has been sent to Rosario Maclang Bautista General Hospital</p>
                 <p class="mb-3">Please note that your appointment is currently being processed. We will review your request and confirm the appointment as soon as possible.</p>
                 <p class="text-[#C22E13] italic">Once your appointment is confirmed, we will notify you via the email address you provided during the booking process.</p>

@@ -13,14 +13,28 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHeadings, WithStyles
 {
+    public function __construct(
+        protected $from,
+        protected $to
+    ) { }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
+        $dateRangeFrom = $this->from;
+        $dateRangeTo = $this->to;
+
         return Booking::with(['patient'])
             ->where('status', Booking::APPROVED)
-            ->where('booking_date', '>=', now()->format('Y-m-d 00:00:00'))
+            ->when(is_null($dateRangeFrom) && is_null($dateRangeTo), function ($q) use($dateRangeFrom, $dateRangeTo) {
+                $q->where('booking_date', '>=', now()->format('Y-m-d 00:00:00'));
+            })
+            ->when(! is_null($dateRangeFrom) && ! is_null($dateRangeTo), function ($q) use($dateRangeFrom, $dateRangeTo) {
+                $q->where('booking_date', '>=', $dateRangeFrom)
+                    ->where('booking_date', '<=', $dateRangeTo);
+            })
             ->get()
             ->map(function ($booking) {
                 $patient = $booking->patient;

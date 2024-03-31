@@ -214,7 +214,7 @@
                       <input type="checkbox" v-model="form.pwd" class="checkbox" /> &nbsp; I'm a PWD (Person with Disabilities)
                     </div>
                     <div class="flex items-center">
-                      <input type="checkbox" v-model="form.senior" class="checkbox" /> &nbsp; I'm a senior citizen
+                      <input type="checkbox" v-model="form.senior" class="checkbox" /> &nbsp; I'm a Senior Citizen
                     </div>
                   </div>
                 </div>
