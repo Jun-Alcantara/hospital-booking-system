@@ -74,8 +74,6 @@ class BookingFormController extends Controller
 
         event(new BookingReceive($booking));
 
-        return "Done";
-
         return redirect()->route('booking.status', $booking);
     }
 
@@ -109,6 +107,10 @@ class BookingFormController extends Controller
             $ampm = 'AM';
             $hour = $i;
 
+            if ($i == 12) {
+                $ampm = "NN";
+            }
+            
             if ($i >= 13) {
                 $ampm = 'PM';
                 $hour = $hour - 12;

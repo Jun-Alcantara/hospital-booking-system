@@ -199,7 +199,7 @@
 
                 <div class="form-control my-3 flex flex-row">
                   <div class="basis-1/2">
-                    <label>Are you a Philhealth member?</label>
+                    <label>Are you a PhilHealth member?</label>
                     <div class="flex gap-7 mt-2">
                       <div class="flex items-center">
                         <input type="radio" name="radio-2" class="radio radio-primary" value="true" v-model="form.philhealthMember" /> &nbsp; Yes
@@ -211,7 +211,7 @@
                   </div>
                   <div class="basis-1/2 flex flex-col gap-3 justify-center">
                     <div class="flex items-center">
-                      <input type="checkbox" v-model="form.pwd" class="checkbox" /> &nbsp; I'm a PWD (Person With Disabilities)
+                      <input type="checkbox" v-model="form.pwd" class="checkbox" /> &nbsp; I'm a PWD (Person with Disabilities)
                     </div>
                     <div class="flex items-center">
                       <input type="checkbox" v-model="form.senior" class="checkbox" /> &nbsp; I'm a senior citizen
@@ -235,7 +235,7 @@
                 </label>
 
                 <span class="italic text-gray-500">
-                  The patient needs to arrife one hour before their scheduled appointment
+                  The patient needs to arrive one hour before their scheduled appointment.
                 </span>
 
                 <div class="flex gap-3">

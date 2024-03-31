@@ -144,7 +144,7 @@
         <div class="w-1/3">
           <label class="form-control w-full">
             <div class="label">
-              <span class="label-text" :class="{'text-error': form.errors.visitEnd}">Visiting Starts At:</span>
+              <span class="label-text" :class="{'text-error': form.errors.visitEnd}">Visiting Ends At:</span>
             </div>
             <select 
               v-model="form.visitEnd"

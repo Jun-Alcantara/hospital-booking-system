@@ -19,6 +19,8 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
     public function collection()
     {
         return Booking::with(['patient'])
+            ->where('status', Booking::APPROVED)
+            ->where('booking_date', '>=', now()->format('Y-m-d 00:00:00'))
             ->get()
             ->map(function ($booking) {
                 $patient = $booking->patient;
