@@ -107,6 +107,12 @@
                 </td>
               </tr>
               <tr>
+                <th>Department / Clinic:</th>
+                <td>
+                  {{ $booking->clinic ? $booking->clinic->name : '' }} / {{ $booking->department ? $booking->department->name : '' }}
+                </td>
+              </tr>
+              <tr>
                 <th>Email:</th>
                 <td>
                   {{ $notifiable->email }}
