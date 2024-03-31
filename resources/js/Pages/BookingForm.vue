@@ -229,7 +229,7 @@
                   <textarea 
                     v-model="form.note"  
                     class="textarea textarea-bordered h-24"
-                    placeholder="Symptoms/Previous check up result/Name of Doctor"
+                    placeholder="Symptoms/Previous checkup result/Name of Doctor"
                   ></textarea>
 
                 </label>
