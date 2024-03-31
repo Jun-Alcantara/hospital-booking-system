@@ -21,12 +21,6 @@
             Bookings
           </Link>
         </li>
-        <!-- <li>
-          <a>
-            <i class="fa fa-users"></i>
-            Patients
-          </a>
-        </li> -->
         <li>
           <Link href="/console/reports">
             <i class="fa fa-file-excel"></i>
@@ -37,6 +31,12 @@
           <Link href="/console/settings">
             <i class="fa fa-cogs"></i>
             Booking Settings
+          </Link>
+        </li>
+        <li>
+          <Link href="/console/users">
+            <i class="fa fa-users"></i>
+            Users
           </Link>
         </li>
         <li>

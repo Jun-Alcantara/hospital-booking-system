@@ -6,6 +6,8 @@ use App\Events\BookingApproved;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 use App\Events\BookingReceive;
+use App\Events\DateBlocked;
+use App\Listeners\NotifyBlockedDates;
 use App\Listeners\SendBookingApprovedNotification;
 use App\Listeners\SendBookingReceiveNotification;
 
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BookingApproved::class => [
             SendBookingApprovedNotification::class
+        ],
+        DateBlocked::class => [
+            NotifyBlockedDates::class
         ]
     ];
 

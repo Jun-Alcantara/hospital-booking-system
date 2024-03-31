@@ -94,6 +94,18 @@ class BookingController extends Controller
             ->with('notification.success', 'Booking has been approved');
     }
 
+    public function rescheduleRequest(Request $request, Booking $booking)
+    {
+        $newDate = Carbon::parse($request->newDate . " " . $request->time . ":00:00")
+            ->format('Y-m-d H:i:s');
+
+        $booking->booking_date = $newDate;
+        $booking->status = Booking::PENDING;
+        $booking->save();
+
+        return redirect('booking/status/' . $booking->reference_number);
+    }
+
     public function sendNotification(Booking $booking)
     {
         // BookingReceived

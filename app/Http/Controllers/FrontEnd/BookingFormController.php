@@ -11,6 +11,8 @@ use App\Models\Booking;
 use App\Models\BookingSettings;
 use App\Models\PatientHealthDeclarationForm;
 use Illuminate\Http\Request;
+use App\Models\BookingBlockedDates;
+use Illuminate\Support\Facades\DB;
 
 class BookingFormController extends Controller
 {
@@ -131,5 +133,31 @@ class BookingFormController extends Controller
         }
 
         return $result;
+    }
+
+    public function selectNewDate(Request $request, Booking $booking)
+    {
+        abort_if(is_null($booking->reschedule_token), 403, "You cannot reschedule your booking unless the date you requested is blocked by the Hospital");
+        abort_if($booking->reschedule_token != $request->signature, 403, "Invalid signature");
+
+        $settings = BookingSettings::find(1);
+
+        $fullyBookSlots = Booking::selectRaw('DATE_FORMAT(booking_date, "%Y-%m-%d") as date')
+            ->selectRaw('COUNT(*) as booking_count')
+            ->groupBy(DB::raw('DATE_FORMAT(booking_date, "%Y-%m-%d")'))
+            ->havingRaw('COUNT(*) >= ?', [$settings->max_booking_per_day ?? 250])
+            ->get()
+            ->pluck('date');
+
+        $blockDates = BookingBlockedDates::get(['date']);
+
+        $disabledDates = $fullyBookSlots->merge($blockDates->pluck('date'));
+
+        $bookingDate = Carbon::parse($booking->booking_date)->format('Y-m-d');
+
+        $blockDate = BookingBlockedDates::where('date', $bookingDate)
+            ->first();
+
+        return inertia('BookingRescheduleForm', compact('disabledDates', 'blockDate', 'booking'));
     }
 }

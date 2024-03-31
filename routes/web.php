@@ -9,6 +9,7 @@ use App\Http\Controllers\BackOffice\BookingController;
 use App\Http\Controllers\BackOffice\BookingSettingsController;
 use App\Http\Controllers\BackOffice\ClinicController;
 use App\Http\Controllers\BackOffice\ReportsController;
+use App\Http\Controllers\BackOffice\UserController;
 use App\Http\Controllers\BookingFormControllerX;
 use App\Http\Controllers\FrontEnd\BookingFormController;
 use App\Http\Controllers\BookingDashboardController;
@@ -32,6 +33,8 @@ Route::get('booking/available-time-slots', [BookingFormController::class, 'avail
 Route::get('booking/status/{booking}', [BookingFormController::class, 'showStatus'])->name('booking.status');
 Route::get('booking/{booking}/health-declaration-form', [BookingFormController::class, 'showHealthDeclarationForm'])->name('booking.healthdeclarationform');
 Route::post('booking/{booking}/health-declaration-form', [BookingFormController::class, 'submitHealthDeclarationForm']);
+Route::get('booking/{booking}/select-new-date', [BookingFormController::class, 'selectNewDate']);
+Route::post('booking/{booking}/reschedule-request', [BookingController::class, 'rescheduleRequest']);
 
 Route::get('console/login', [LoginController::class, 'show'])
     ->name('login')
@@ -57,6 +60,8 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     Route::get('reports', [ReportsController::class, 'reports']);
     Route::get('reports/server-side/patient-database', [ReportsController::class, 'downloadPatientDatabase']);
     Route::get('reports/client-side/printable/health-declaration/{booking}', [ReportsController::class, 'printableHealthDeclaration']);
+
+    Route::resource('users', UserController::class);
 
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 
