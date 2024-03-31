@@ -47,7 +47,7 @@
 
 <script>
   import DashboardLayout from '../Layouts/DashboardLayout.vue';
-import axios from 'axios';
+  import axios from 'axios';
 
   export default {
     layout: DashboardLayout
@@ -116,12 +116,12 @@ import axios from 'axios';
     </div>
 
     <div>
-      <!-- <div class="flex justify-end">
-        <button class="btn btn-neutral">
+      <div class="flex justify-end">
+        <a target="_blank" :href="`/console/reports/client-side/printable/health-declaration/${booking.reference_number}`" class="btn btn-neutral">
           <i class="fa fa-print"></i>
           Print Health Declaration Form
-        </button>
-      </div> -->
+        </a>
+      </div>
       <div class="card shadow-lg">
         <div class="card-body px-[50px]">
           <HealthDeclarationFormView v-if="healthDeclarationForm" :form="healthDeclarationForm"  />

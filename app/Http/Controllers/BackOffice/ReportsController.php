@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ApprovedBookingsExport;
 use Illuminate\Http\Request;
+use App\Models\Booking;
 
 class ReportsController extends Controller
 {
@@ -20,5 +21,16 @@ class ReportsController extends Controller
         $filename = "patient-database-$currentDate.xlsx";
         
         return Excel::download(new ApprovedBookingsExport($request->from, $request->to), $filename);
+    }
+
+    public function printableHealthDeclaration(Booking $booking)
+    { 
+        $healthDeclarationForm = $booking->healthDeclarationForm->sortByDesc('id')->first();
+
+        if ($healthDeclarationForm) {
+            $healthDeclarationForm->questions = json_decode($healthDeclarationForm->questions);
+        }
+
+        return inertia('Console/Printable/HealthDeclaration', compact('healthDeclarationForm'));
     }
 }

@@ -56,6 +56,7 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
 
     Route::get('reports', [ReportsController::class, 'reports']);
     Route::get('reports/server-side/patient-database', [ReportsController::class, 'downloadPatientDatabase']);
+    Route::get('reports/client-side/printable/health-declaration/{booking}', [ReportsController::class, 'printableHealthDeclaration']);
 
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 
