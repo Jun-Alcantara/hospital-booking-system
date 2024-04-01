@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'created_by',
-        'status'
+        'status',
+        'must_reset_password'
     ];
 
     /**

@@ -3,6 +3,9 @@
   import flatPickr from 'vue-flatpickr-component'
   import dayjs from 'dayjs'
   import { useForm, usePage } from '@inertiajs/vue3'
+  import { useToast } from "vue-toastification"
+
+  const toast = useToast()
 
   import 'flatpickr/dist/flatpickr.css'
 
@@ -29,7 +32,8 @@
   const submit = () => {
     form.post('/console/settings', {
       onSuccess: () => {
-        showAlert.value = usePage().props.flash_notifications.success
+        // showAlert.value = usePage().props.flash_notifications.success
+        toast(usePage().props.flash_notifications.success)
       }
     })
   }

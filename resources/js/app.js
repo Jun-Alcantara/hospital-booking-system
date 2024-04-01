@@ -1,6 +1,8 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { createPinia } from 'pinia'
+import Toast from "vue-toastification"
+import "vue-toastification/dist/index.css"
 
 const pinia = createPinia()
 
@@ -13,6 +15,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(pinia)
+      .use(Toast, {})
       .mount(el)
   },
 })

@@ -13,6 +13,10 @@ use App\Http\Controllers\BackOffice\UserController;
 use App\Http\Controllers\BookingFormControllerX;
 use App\Http\Controllers\FrontEnd\BookingFormController;
 use App\Http\Controllers\BookingDashboardController;
+use App\Http\Controllers\ErrorController;
+use App\Http\Middleware\ActiveAccountOnly;
+use App\Http\Middleware\AdminOnly;
+use App\Http\Middleware\AdminOrOwnAccountOnly;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,7 +46,9 @@ Route::get('console/login', [LoginController::class, 'show'])
 
 Route::post('console/login', [LoginController::class, 'login']);
 
-Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
+Route::get('/logout', [LoginController::class, 'manualLogout']);
+
+Route::group(['prefix' => 'console', 'middleware' => ['auth', ActiveAccountOnly::class]], function () {
     Route::delete('logout', [LoginController::class, 'logout'])->name('console.logout');
     Route::get('dashboard', [BookingDashboardController::class, 'index'])->name('console.dashboard');
     Route::get('settings', [BookingSettingsController::class,'showSettings'])->name('booking.settings');
@@ -61,7 +67,17 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth']], function () {
     Route::get('reports/server-side/patient-database', [ReportsController::class, 'downloadPatientDatabase']);
     Route::get('reports/client-side/printable/health-declaration/{booking}', [ReportsController::class, 'printableHealthDeclaration']);
 
-    Route::resource('users', UserController::class);
+    // Administrator Only
+    Route::group(['prefix' => 'users', 'middleware' => [AdminOnly::class]], function () {
+        Route::get('', [UserController::class, 'index']);
+        Route::post('', [UserController::class, 'store']);
+    });
+
+    // Own or Admin Account
+    Route::group(['prefix' => 'users', 'middleware' => [AdminOrOwnAccountOnly::class]], function () {
+        Route::get('{user}', [UserController::class, 'show']);
+        Route::patch('{user}', [UserController::class, 'update']);
+    });
 
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 
@@ -79,3 +95,5 @@ Route::prefix('api')->group(function () {
     Route::get('patients', [PatientController::class, 'searchEmail']);
     Route::get('search/booking', [BookingsController::class, 'searchBooking']);
 });
+
+Route::get('/forbidden', [ErrorController::class, 'forbidden']);
