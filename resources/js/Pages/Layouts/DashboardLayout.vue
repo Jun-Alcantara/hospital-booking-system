@@ -1,5 +1,8 @@
 <script setup>
-  import { router, Link } from '@inertiajs/vue3'
+  import { router, Link, usePage } from '@inertiajs/vue3'
+
+  const page = usePage()
+  const authenticatedUser = page.props.auth.user
 
   const logout = () => {
     router.delete('/console/logout', {
@@ -33,7 +36,7 @@
             Booking Settings
           </Link>
         </li>
-        <li>
+        <li v-if="authenticatedUser.role_id == 1">  
           <Link href="/console/users">
             <i class="fa fa-users"></i>
             Users
@@ -46,7 +49,7 @@
               My Account
             </summary>
             <ul class="p-2 bg-base-100 rounded-t-none">
-              <!-- <li><a>Update Details</a></li> -->
+              <li><Link :href="`/console/users/${authenticatedUser.id}`">Update Details</Link></li>
               <li>
                 <form @submit.prevent="logout">
                   <button type="submit">Logout</button>

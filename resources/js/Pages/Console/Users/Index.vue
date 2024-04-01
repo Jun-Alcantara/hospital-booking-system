@@ -8,7 +8,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  import { useForm } from '@inertiajs/vue3'
+  import { useForm, Link } from '@inertiajs/vue3'
 
   const props = defineProps({
     users: Object
@@ -30,7 +30,7 @@
   const handleSubmit = () => {
     newUserForm.post(`/console/users`, {
       onSuccess: (response) => {
-        console.log(response)
+        showCreateModal.value = false
       }
     })
   }
@@ -65,7 +65,11 @@
             <td>{{ user.role_id == 1 ? 'Administrator' : 'Staff' }}</td>
             <td>{{ user.created_by?.name }}</td>
             <td>{{ user.status == 1 ? 'Active' : 'Inactive' }}</td>
-            <td></td>
+            <td class="text-right">
+              <Link :href="`/console/users/${user.id}`" class="text-primary">
+                <i class="fa fa-eye"></i> View Details
+              </Link>
+            </td>
           </tr>
         </tbody>
       </table>

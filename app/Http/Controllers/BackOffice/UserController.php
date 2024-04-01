@@ -47,7 +47,8 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => bcrypt($validated['defaultPassword']),
             'created_by' => Auth::user()->id,
-            'status' => 1
+            'status' => 1,
+            'must_reset_password' => 1
         ]);
 
         return back()
@@ -57,9 +58,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user, Request $request)
     {
-        //
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->role_id != 1 && $user->id != $authenticatedUser->id) {
+            abort(401);
+        }
+
+        return inertia('Console/Users/Show', compact('user'));
     }
 
     /**
@@ -73,9 +80,40 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->role_id != 1 && $user->id != $authenticatedUser->id) {
+            abort(401);
+        }
+        
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $user->id . ',id',
+            'role' => 'required',
+            'status' => 'required'
+        ]);
+
+        if (! is_null($request->newPassword)) {
+            $request->validate([
+                'newPassword' => 'confirmed'
+            ], [
+                'newPassword' => 'The password field confirmation does not match.'
+            ]);
+
+            $user->password = bcrypt($request->newPassword);
+        }
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role_id = $validated['role'];
+        $user->status = $validated['status'];
+        $user->save();
+
+        session()->flash('showUser', true);
+
+        return redirect('/console/users/' . $user->id)->with('notification.success', 'User details updated');
     }
 
     /**
