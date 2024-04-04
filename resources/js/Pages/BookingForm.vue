@@ -82,7 +82,7 @@
 </script>
 
 <template>
-  <section class="bg-gray-100" style="background: url('/images/backgrounds/booking-form.jpg'); background-repeat: no-repeat; background-size: cover;">
+  <section class="bg-gray-100 relative" style="background: url('/images/backgrounds/booking-form.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="max-w-screen-xl mx-auto h-screen">
       <div class="flex flex-col md:flex-row">
         <div class="basis-1/2 flex justify-center items-center">
@@ -251,6 +251,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="flex absolute bottom-10 left-10">
+      <a href="mailto:rmbgh@quezoncity.gov.ph" class="text-white text-xl">
+        CONTACT US: <i class="fa fa-envelope"></i> rmbgh@quezoncity.gov.ph
+      </a>
     </div>
 
     <dialog class="modal" :class="{'modal-open': showOpdSchedule}">

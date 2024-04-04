@@ -11,6 +11,7 @@ use App\Models\BookingSettings;
 use App\Models\BookingBlockedDates;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -36,6 +37,7 @@ class BookingController extends Controller
         $booking->clinic_id = $request->clinic;
         $booking->clinic_department_id = $request->department;
         $booking->status = Booking::APPROVED;
+        $booking->approved_by = Auth::user()->id;
         $booking->save();
 
         event(new BookingApproved($booking));

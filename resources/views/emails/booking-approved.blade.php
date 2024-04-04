@@ -126,7 +126,7 @@
               </tr>
             </table>
             <p>
-              If you wish to cancel, please contact us at Rosario Maclang Bautista General Hospital with your booking details.
+              If you wish to cancel, please contact us at <a href="mailto:rmbgh@quezoncity.gov.ph">rmbgh@quezoncity.gov.ph</a> with your booking details.
             </p>
           </div>
         </td>
