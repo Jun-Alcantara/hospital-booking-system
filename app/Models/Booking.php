@@ -84,4 +84,9 @@ class Booking extends Model
     {
         return $this->belongsTo(ClinicDepartment::class, 'clinic_department_id');
     }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
 }

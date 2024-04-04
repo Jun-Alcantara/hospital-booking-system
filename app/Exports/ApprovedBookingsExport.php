@@ -27,6 +27,7 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
         $dateRangeTo = $this->to;
 
         return Booking::with(['patient'])
+            ->with('approver')
             ->where('status', Booking::APPROVED)
             ->when(is_null($dateRangeFrom) && is_null($dateRangeTo), function ($q) use($dateRangeFrom, $dateRangeTo) {
                 $q->where('booking_date', '>=', now()->format('Y-m-d 00:00:00'));
@@ -38,7 +39,7 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
             ->get()
             ->map(function ($booking) {
                 $patient = $booking->patient;
-
+                
                 $healthDec = PatientHealthDeclarationForm::whereBookingId($booking->id)
                     ->first();
 
@@ -67,7 +68,8 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
                     'Birthdate' => $birthdate,
                     'Address' => $healthDec->address ?? null,
                     'Approved Booked Date' => Carbon::parse($booking->booking_date)->format('Y-m-d'),
-                    'Clinic/Department' => $clinicDepartment
+                    'Clinic/Department' => $clinicDepartment,
+                    'Approved By' => $booking->approver->name ?? null
                 ];
             });
     }

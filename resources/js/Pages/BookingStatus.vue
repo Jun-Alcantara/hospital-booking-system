@@ -56,7 +56,7 @@
                 </table>
 
                 <p>
-                  If you wish to cancel, please contact us at <strong>Rosario Maclang Bautista General Hospital</strong> with your booking details.
+                  If you wish to cancel, please contact us at <strong><a href="mailto:rmbgh@quezoncity.gov.ph">rmbgh@quezoncity.gov.ph</a></strong> with your booking details.
                 </p>
               </div>
             </div>
