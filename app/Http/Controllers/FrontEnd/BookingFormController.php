@@ -38,6 +38,9 @@ class BookingFormController extends Controller
             'note' => $request->note
         ]);
 
+        $booking->reference_number = 'RMB-' . str_pad($booking->id, 6, '0', STR_PAD_LEFT);
+        $booking->save();
+
         return redirect()->route('booking.healthdeclarationform', $booking);
     }
 
