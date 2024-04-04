@@ -85,7 +85,8 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
             'Birthdate',
             'Address',
             'Approved Booked Date',
-            'Clinic / Department'
+            'Clinic / Department',
+            'Approved By'
         ];
     }
 
