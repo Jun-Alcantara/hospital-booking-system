@@ -88,7 +88,7 @@
           <div>
             <p class="mb-3 ">Hi {{ $notifiable->firstname }} {{ $notifiable->lastname }}!</p>
             <p class="mb-3">
-              Rosario Maclang Bautista General Hospital has <strong>CONFIRMED</strong> you booking request. Please don't be a no show, the hospital reserved that spot for you.
+              Rosario Maclang Bautista General Hospital has <strong>CONFIRMED</strong> your booking request. Please don't be a no show, the hospital reserved that spot for you.
             </p>
             <p class="mb-3">
               You may see your booking request details below:
