@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\BookingBlockedDates;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class BookingsController extends Controller
 {
@@ -53,10 +54,19 @@ class BookingsController extends Controller
     public function searchBooking(Request $request)
     {
         $searchKey = "%$request->q%";
+        $status = $request->status;
+        $user = Auth::user();
 
         return Booking::with('patient')
+            ->with('clinic', 'department')
             ->whereHas('patient', function ($q) use ($searchKey) {
-                $q->whereRaw("(email LIKE ?)", [$searchKey]);
-            })->get();
+                $q->whereRaw("(email LIKE ? OR firstname LIKE ? OR lastname LIKE ?)", [$searchKey, $searchKey, $searchKey]);
+            })
+            ->when($status != 'all', function ($q) use ($status) {
+                $q->where('bookings.status', $status);
+            })
+            ->filterByRole($user)
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 }

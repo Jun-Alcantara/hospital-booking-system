@@ -98,6 +98,10 @@
                 <th class="text-left" style="min-width: 200px;">Patient's Note</th>
                 <td>{{ booking.note }}</td>
               </tr>
+              <tr>
+                <th class="text-left" style="min-width: 200px;">Clinic / Department</th>
+                <td>{{ booking.clinic?.name }} / {{ booking.department?.name }}</td>
+              </tr>
             </table>
           </div>
         </div>
@@ -109,34 +113,6 @@
               New Booking Schedule
             </h1>
             <table class="">
-              <tr>
-                <td colspan="2">
-                  <label class="form-control w-full">
-                    <div class="label">
-                      <span class="label-text" :class="{'text-error' : form.errors.clinic}">Clinic</span>
-                    </div>
-                    <select v-model="form.clinic" @change="handleClinicChange" class="select select-bordered" :class="{'select-error' : form.errors.clinic}">
-                      <option disabled selected>Pick one</option>
-                      <option v-for="clinic in clinics" :value="clinic.id">{{ clinic.name }}</option>
-                    </select>
-                    <span v-if="form.errors.clinic" class="text-error">{{ form.errors.clinic }}</span>
-                  </label>
-                </td>
-              </tr>
-              <tr v-if="form.clinic">
-                <td colspan="2">
-                  <label class="form-control w-full">
-                    <div class="label">
-                      <span class="label-text" :class="{'text-error' : form.errors.department}">Department</span>
-                    </div>
-                    <select v-model="form.department" class="select select-bordered" :class="{'select-error' : form.errors.department}">
-                      <option :value="null" disabled selected>Pick one</option>
-                      <option v-for="department in departments" :value="department.id">{{ department.name }}</option>
-                    </select>
-                    <span v-if="form.errors.department" class="text-error">{{ form.errors.department }}</span>
-                  </label>
-                </td>
-              </tr>
               <tr>
                 <td colspan="2" class="text-left">
                   <div class="label">

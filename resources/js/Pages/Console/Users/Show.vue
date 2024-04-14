@@ -54,7 +54,8 @@
             <select class="select select-bordered w-full" v-model="form.role">
               <option disabled selected>Select Role</option>
               <option value="1">Administrator</option>
-              <option value="2">Staff</option>
+              <option value="2">Triage Officer</option>
+              <option value="3">Admission Coordinator</option>
             </select>
             <span v-if="form.errors.role" class="text-error">{{ form.errors.role }}</span>
           </div>

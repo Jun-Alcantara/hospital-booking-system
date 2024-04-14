@@ -34,6 +34,16 @@
       }
     })
   }
+
+  const userRole = (id) => {
+    const roleMap = {
+      1: 'Administrator',
+      2: 'Triage Officer',
+      3: 'Admission Coordinator'
+    }
+
+    return roleMap[id] ?? null
+  }
 </script>
 
 <template>
@@ -62,7 +72,7 @@
           <tr v-for="user in users" :key="user.id">
             <th>{{ user.name }}</th>
             <td>{{ user.email }}</td>
-            <td>{{ user.role_id == 1 ? 'Administrator' : 'Staff' }}</td>
+            <td>{{ userRole(user.role_id) }}</td>
             <td>{{ user.created_by?.name }}</td>
             <td>{{ user.status == 1 ? 'Active' : 'Inactive' }}</td>
             <td class="text-right">
@@ -92,7 +102,8 @@
           <select class="select select-bordered w-full" v-model="newUserForm.role">
             <option disabled selected>Select Role</option>
             <option value="1">Administrator</option>
-            <option value="2">Staff</option>
+            <option value="2">Traige Officer</option>
+            <option value="3">Admission Coordinator</option>
           </select>
           <span v-if="newUserForm.errors.role" class="text-error">{{ newUserForm.errors.role }}</span>
         </div>
