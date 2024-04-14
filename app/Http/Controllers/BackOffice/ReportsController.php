@@ -7,6 +7,10 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ApprovedBookingsExport;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Clinic;
+use App\Models\ClinicDepartment;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
@@ -32,5 +36,21 @@ class ReportsController extends Controller
         }
 
         return inertia('Console/Printable/HealthDeclaration', compact('healthDeclarationForm'));
+    }
+
+    public function downloadDailyCensus(Request $request)
+    {
+        $data['clinic'] = Clinic::find($request->clinic);
+        $data['department'] = ClinicDepartment::find($request->department);
+
+        return DB::raw();
+
+        $ageBracket = [
+
+        ];
+
+        $pdf = Pdf::loadView('pdf-templates.daily-census', $data);
+        $pdf->setPaper('a4');
+        return $pdf->download('invoice.pdf');
     }
 }

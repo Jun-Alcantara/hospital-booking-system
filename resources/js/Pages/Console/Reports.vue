@@ -1,5 +1,6 @@
 <script>
   import DashboardLayout from '../Layouts/DashboardLayout.vue'
+  import DailyCensus from './Reports/DailyCensus.vue'
 
   export default {
     layout: DashboardLayout
@@ -43,7 +44,7 @@
   <div class="max-w-screen-xl mx-auto">
     <h1 class="text-3xl">Reports</h1>
     <hr class="my-5">
-    <div class="flex">
+    <div class="flex gap-3">
       <div class="basis-1/3">
         <div class="card w-full shadow-xl border-[1px] border-gray-100">
           <div class="card-body">
@@ -61,6 +62,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="basis-1/3">
+        <DailyCensus />
       </div>
     </div>
   </div>

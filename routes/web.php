@@ -59,12 +59,15 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth', ActiveAccountOnly:
     Route::get('booking/{booking}', [BookingController::class, 'show']);
     Route::patch('booking/{booking}/approve', [BookingController::class, 'approve']);
     Route::patch('booking/{booking}/cancel', [BookingController::class, 'cancel']);
+    Route::patch('booking/{booking}/assign', [BookingController::class, 'assign']);
+    Route::patch('booking/{booking}/return-to-triage', [BookingController::class, 'returnToTriage']);
     
     Route::get('booking/{booking}/reschedule', [BookingController::class, 'rescheduleForm']);
     Route::post('booking/{booking}/reschedule', [BookingController::class, 'reschedule']);
 
     Route::get('reports', [ReportsController::class, 'reports']);
     Route::get('reports/server-side/patient-database', [ReportsController::class, 'downloadPatientDatabase']);
+    Route::get('reports/server-side/daily-census', [ReportsController::class, 'downloadDailyCensus']);
     Route::get('reports/client-side/printable/health-declaration/{booking}', [ReportsController::class, 'printableHealthDeclaration']);
 
     // Administrator Only
@@ -97,3 +100,7 @@ Route::prefix('api')->group(function () {
 });
 
 Route::get('/forbidden', [ErrorController::class, 'forbidden']);
+
+Route::get('preview-daily-census', function () {
+    return view('pdf-templates.daily-census');
+});

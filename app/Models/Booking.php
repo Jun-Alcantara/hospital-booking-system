@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
 
 class Booking extends Model
 {
     use HasFactory;
 
-    public const PENDING = 0;
+    public const FOR_ASSESSMENT = 0;
     public const APPROVED = 1;
-    public const RESCHEDULED = 2;
+    public const FOR_APPROVAL = 2;
     public const CANCELED = 3;
     public const FOR_RESCHEDULING = 4;
     public const COMPLETED = 5;
@@ -45,13 +44,13 @@ class Booking extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'PENDING';
+                return 'FOR ASSESSMENT';
                 break;
             case 1: 
-                return 'APPROVE';
+                return 'APPROVED';
                 break;
             case 2:
-                return 'RESCHEDULED';
+                return 'FOR APPROVAL';
                 break;
             case 3:
                 return 'CANCELED';
@@ -63,6 +62,17 @@ class Booking extends Model
                 return 'COMPLETED';
                 break;
         }
+    }
+
+    public function scopeFilterByRole(Builder $query, User $user): void
+    {
+        $query->when($user->role_id == User::TRIAGE_OFFICER, function ($q) {
+            $q->where('bookings.status', Booking::FOR_ASSESSMENT);
+        });
+
+        $query->when($user->role_id == User::ADMISSION_COORDINATOR, function ($q) {
+            $q->where('bookings.status', BOoking::FOR_APPROVAL);
+        });
     }
 
     public function patient(): BelongsTo
@@ -88,5 +98,15 @@ class Booking extends Model
     public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function assignedBy()
+    {
+        return $this->belongsTo(User::class, 'assigned_by');
+    }
+
+    public function cancelledBy()
+    {
+        return $this->belongsTo(User::class, 'cancelled_by');
     }
 }

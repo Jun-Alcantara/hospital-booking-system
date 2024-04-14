@@ -48,6 +48,8 @@ class User extends Authenticatable
     ];
 
     public const ADMINISTRATOR = 1;
+    public const TRIAGE_OFFICER = 2;
+    public const ADMISSION_COORDINATOR = 3;
 
     public function createdBy()
     {
