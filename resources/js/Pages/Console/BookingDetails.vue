@@ -139,7 +139,7 @@
 
       <div class="card border-[1px] border-gray-100 shadow-md basis-1/3">
         <div class="card-body">
-          <div v-if="authenticatedUser.role_id == 2">
+          <div v-if="authenticatedUser.role_id == 2 || authenticatedUser.role_id == 1">
             <div v-if="booking.status == 0" id="clinic_department_assessent_form">
               <label class="form-control w-full">
                 <div class="label">
@@ -181,7 +181,7 @@
                 </button>
               </div>
             </div>
-            <div v-else-if="booking.status == 2">
+            <div v-else-if="booking.status == 2 && authenticatedUser.role_id == 2">
               <h1 class="italic text-center">
                 This booking has been sent to Admission Coordinator and waiting for approval. 
               </h1>
