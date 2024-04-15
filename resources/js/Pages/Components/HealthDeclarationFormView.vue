@@ -370,6 +370,10 @@
       Kusang loob at malayang pumapayag ako sa koleksyon at pagbabahagi ng nasa itaas na personal na impormasyon na may kaugnayan sa RMBGH COVID-19 protocol.
     </p>
   </div>
+
+  <div class="text-right">
+    QCG.RMBGH.HIM.F.29
+  </div>
 </template>
 
 <style scoped>

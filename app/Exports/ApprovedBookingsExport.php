@@ -60,9 +60,6 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
                 }
 
                 return [
-                    'Last Name' => $patient->lastname,
-                    'First Name' => $patient->firstname,
-                    'Middle Name' => $patient->middlename,
                     'Age' => $healthDec->age ?? 0,
                     'Gender' => $healthDec->gender ?? null,
                     'Birthdate' => $birthdate,
@@ -77,9 +74,6 @@ class ApprovedBookingsExport implements FromCollection, ShouldAutoSize, WithHead
     public function headings(): array
     {
         return [
-            'Last Name',
-            'First Name',
-            'Middle Name',
             'Age',
             'Gender',
             'Birthdate',
