@@ -1,4 +1,4 @@
-<script setup>
+  <script setup>
   import flatPickr from 'vue-flatpickr-component'
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
@@ -16,6 +16,7 @@
   onMounted(() => {
     axios.get(`/console/clinics`).then((response) => {
       clinics.value = response.data
+      console.log(response.data)
     })
   })
 
@@ -23,15 +24,18 @@
   const clinic = ref(null)
   const department = ref(null)
 
-  const downloadUrl = ref(`/console/reports/server-side/daily-census?clinic=3&department=11&date=2024-04-24`)
+  const getClinics = () => {
+    axios.get(`/console/clinic/${clinic.value}/departments`).then((response) => {
+      departments.value = response.data
+    })
+
+    modifyDownloadURL()
+  }
+
+  const downloadUrl = ref(`/console/reports/server-side/daily-census?clinic=${clinic.value}&department=${department.value}&date=${censusDate.value}`)
 
   const modifyDownloadURL = () => {
-    censusDate.value = censusDate
-    console.log({
-      censusDate: censusDate.value,
-      clinic: clinic.value,
-      department: department.value,
-    })
+    downloadUrl.value = `/console/reports/server-side/daily-census?clinic=${clinic.value}&department=${department.value}&date=${censusDate.value}`
   }
 </script>
 
@@ -43,16 +47,16 @@
       <hr class="my-3 border-[1px]" />
       <div class="flex flex-col">
         <span>Clinic:</span>
-        <select v-model="clinic" @change="modifyDownloadURL" class="select select-bordered w-full">
+        <select v-model="clinic" @change="getClinics" class="select select-bordered w-full">
           <option value=""></option>
-          <option v-for="clinic in clinics">{{ clinic.name }}</option>
+          <option v-for="clinic in clinics" :value="clinic.id">{{ clinic.name }}</option>
         </select>
       </div>
       <div class="flex flex-col">
         <span>Department:</span>
         <select v-model="department" @change="modifyDownloadURL" class="select select-bordered w-full">
           <option value=""></option>
-          <option v-for="department in departments">{{ department.name }}</option>
+          <option v-for="department in departments" :value="department.id">{{ department.name }}</option>
         </select>
       </div>
       <div class="flex flex-col">
