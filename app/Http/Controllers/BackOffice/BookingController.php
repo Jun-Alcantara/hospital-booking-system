@@ -12,6 +12,7 @@ use App\Models\BookingBlockedDates;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -143,6 +144,41 @@ class BookingController extends Controller
         return redirect()
             ->route('console.dashboard')
             ->with('notification.success', 'Booking details updated');
+    }
+
+    public function verifyEmail(Booking $booking)
+    {
+        $patient = $booking->patient;
+
+        if ($patient->emailIsVerified()) {
+            return redirect('/booking/' . $booking->reference_number . '/health-declaration-form');
+        }
+
+        return inertia('EmailVerificationForm', compact('patient', 'booking'));
+    }
+
+    public function verifyCode(Request $request, Booking $booking)
+    {
+        $patient = $booking->patient;
+        $valid = false;
+
+        if ($request->otp == $patient->verification_code) {
+            $valid = true;
+            $patient->email_verified_at = now()->format('Y-m-d H:i:s');
+            $patient->save();
+
+            return redirect("/booking/{$booking->reference_number}/health-declaration-form");
+        } else {
+            $validator = Validator::make($request->all(), [
+                'otp' => 'email', // Example validation rules
+            ], [
+                'otp' => 'OTP is invalid'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
     }
 
     public function sendNotification(Booking $booking)

@@ -39,6 +39,8 @@ Route::get('booking/{booking}/health-declaration-form', [BookingFormController::
 Route::post('booking/{booking}/health-declaration-form', [BookingFormController::class, 'submitHealthDeclarationForm']);
 Route::get('booking/{booking}/select-new-date', [BookingFormController::class, 'selectNewDate']);
 Route::post('booking/{booking}/reschedule-request', [BookingController::class, 'rescheduleRequest']);
+Route::get('booking/{booking}/verify-email', [BookingController::class, 'verifyEmail']);
+Route::post('booking/{booking}/verify-email', [BookingController::class, 'verifyCode']);
 
 Route::get('console/login', [LoginController::class, 'show'])
     ->name('login')

@@ -12,12 +12,16 @@ use App\Models\BookingSettings;
 use App\Models\PatientHealthDeclarationForm;
 use Illuminate\Http\Request;
 use App\Models\BookingBlockedDates;
+use App\Notifications\EmailVerificationEmail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BookingFormController extends Controller
 {
     public function submit(BookingFormRequest $request)
     {
+        $verificationCode = strtoupper(Str::random(6));
+
         $patient = Patient::updateOrCreate([
             'email' => $request->email
         ], [
@@ -27,7 +31,8 @@ class BookingFormController extends Controller
             'lastname' => $request->lastname,
             'philhealth_member' => $request->philhealthMember == "true" ? 1 : 0,
             'pwd' => $request->pwd,
-            'senior' => $request->senior
+            'senior' => $request->senior,
+            'verification_code' => $verificationCode
         ]);
 
         $booking = Booking::create([
@@ -40,6 +45,11 @@ class BookingFormController extends Controller
 
         $booking->reference_number = 'RMB-' . str_pad($booking->id, 6, '0', STR_PAD_LEFT);
         $booking->save();
+
+        if (! $patient->emailIsVerified()) {
+            $patient->notify(new EmailVerificationEmail($booking, $verificationCode));
+            return redirect("/booking/{$booking->reference_number}/verify-email");
+        }
 
         return redirect()->route('booking.healthdeclarationform', $booking);
     }

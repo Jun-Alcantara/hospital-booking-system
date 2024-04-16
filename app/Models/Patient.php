@@ -12,6 +12,11 @@ class Patient extends Model
     use Notifiable;
 
     protected $fillable = [
-        'email', 'firstname', 'middlename', 'lastname', 'philhealth_member', 'pwd', 'senior'
+        'email', 'firstname', 'middlename', 'lastname', 'philhealth_member', 'pwd', 'senior', 'verification_code'
     ];
+
+    public function emailIsVerified()
+    {
+        return $this->email_verified_at != null;
+    }
 }
