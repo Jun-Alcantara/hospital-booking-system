@@ -82,6 +82,7 @@ Route::group(['prefix' => 'console', 'middleware' => ['auth', ActiveAccountOnly:
         Route::patch('{user}', [UserController::class, 'update']);
     });
 
+    Route::get('clinics', [ClinicController::class, 'clinics']);
     Route::get('clinic/{clinic}/departments', [ClinicController::class, 'show']);
 
     // Test routes

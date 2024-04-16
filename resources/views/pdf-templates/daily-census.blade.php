@@ -71,7 +71,7 @@
 
       <tr>
         <th colspan="2">DATE:</th>
-        <td colspan="2">{{ now()->format('F d, Y') }}</td>
+        <td colspan="2">{{ $date->format('F d, Y') }}</td>
       </tr>
 
       <tr>
@@ -97,104 +97,27 @@
         <th style="text-align: center;">FEMALE</th>
       </tr>
 
-      <tr>
-        <th colspan="2" style="text-align: center;">< 1</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">1 - 4</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">5 - 9</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">10 - 14</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">15 - 18</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">19</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">20 - 24</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">25 -29</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">30 - 34</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">35 - 39</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">40 - 44</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">45 - 49</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-
-      <tr>
-        <th colspan="2" style="text-align: center;">50 - 54</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-      
-      <tr>
-        <th colspan="2" style="text-align: center;">55 - 59</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-      <tr>
-        <th colspan="2" style="text-align: center;">60 - 64</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-      <tr>
-        <th colspan="2" style="text-align: center;">65 - 69</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
-      <tr>
-        <th colspan="2" style="text-align: center;">70 <</th>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-      </tr>
+      @foreach($ageBracket as $label => $age)
+        <tr>
+          <th colspan="2" style="text-align: center;">{{ $label }}</th>
+          <td style="text-align: center;">
+            {{
+              $patients->where('age', '>=', $age[0])
+                  ->where('age', '<=', $age[0])
+                  ->where('gender', 'male')
+                  ->count();
+            }}
+          </td>
+          <td style="text-align: center;">
+            {{
+              $patients->where('age', '>=', $age[0])
+                  ->where('age', '<=', $age[1])
+                  ->where('gender', 'female')
+                  ->count();
+            }}
+          </td>
+        </tr>
+      @endforeach
     </table>
 
     <table>
