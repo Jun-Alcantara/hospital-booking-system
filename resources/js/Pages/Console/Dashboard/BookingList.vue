@@ -55,6 +55,8 @@
         <tr>
           <th>Reference Number</th>
           <th>Name</th>
+          <th>Email</th>
+          <th>Email Verified</th>
           <th>Booked Date</th>
           <th>Booking Date</th>
           <th>Clinic / Department</th>
@@ -67,6 +69,8 @@
         <tr v-for="booking in bookings" :key="booking.id">
           <th>{{ booking.reference_number }}</th>
           <td>{{ booking.patient?.firstname }} {{ booking.patient?.lastname }}</td>
+          <td>{{ booking.patient?.email }}</td>
+          <td>{{ booking.patient?.email_verified_at ? 'Yes' : 'No' }}</td>
           <td>{{ dayjs(booking.booking_date).format('MMMM DD, YYYY hh:mm A') }}</td>
           <td>{{ dayjs(booking.created_at).format('MMMM DD, YYYY hh:mm A') }}</td>
           <td>{{ booking.clinic?.name }} / {{ booking.department?.name }}</td>
