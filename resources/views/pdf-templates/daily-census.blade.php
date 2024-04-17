@@ -103,7 +103,7 @@
           <td style="text-align: center;">
             {{
               $patients->where('age', '>=', $age[0])
-                  ->where('age', '<=', $age[0])
+                  ->where('age', '<=', $age[1])
                   ->where('gender', 'male')
                   ->count();
             }}
